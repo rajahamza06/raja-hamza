@@ -1,38 +1,121 @@
-<header class="custom-header" style="display:flex; justify-content:space-between; align-items:center; padding:20px;">
-  
-  <!-- Left: Logo -->
-  <div class="header-logo">
-    {% if section.settings.logo != blank %}
-      <img src="{{ section.settings.logo | image_url }}" alt="{{ shop.name }}" style="max-height:60px;">
-    {% else %}
-      <h2>{{ shop.name }}</h2>
-    {% endif %}
-  </div>
+{% liquid
+  assign class = 'custom-flex-header'
+%}
 
-  <!-- Middle: Text / Line -->
-  <div class="header-text" style="text-align:center; flex-grow:1;">
-    <p style="margin:0; font-size:18px;">{{ section.settings.middle_text }}</p>
-  </div>
+<header-component 
+  id="custom-flex-header-component"
+  class="{{ class }}"
+  {% if section.settings.sticky_header != 'none' %}
+    sticky="{{ section.settings.sticky_header }}"
+  {% endif %}
+  data-skip-node-update
+>
+  <div class="custom-flex-header__row">
+    <!-- Left Button with optional image -->
+    <div class="custom-flex-header__left">
+      {% if section.settings.left_image != blank %}
+        <img src="{{ section.settings.left_image | image_url: width: 100 }}" 
+             alt="Left Icon" 
+             style="max-height:50px; margin-right:10px;">
+      {% endif %}
+      {% if section.settings.left_button_text != blank %}
+        <a href="{{ section.settings.left_button_link }}" 
+           class="custom-flex-header__button">
+          {{ section.settings.left_button_text }}
+        </a>
+      {% endif %}
+    </div>
 
-  <!-- Right: Button -->
-  <div class="header-button">
-    {% if section.settings.button_text != blank %}
-      <a href="{{ section.settings.button_link }}" class="btn" style="padding:10px 20px; background:#000; color:#fff; text-decoration:none; border-radius:5px;">
-        {{ section.settings.button_text }}
-      </a>
-    {% endif %}
-  </div>
+    <!-- Middle Text -->
+    <div class="custom-flex-header__middle">
+      <p>{{ section.settings.middle_text }}</p>
+    </div>
 
-</header>
+    <!-- Right Logo -->
+    <div class="custom-flex-header__right">
+      {% if section.settings.right_logo != blank %}
+        <img src="{{ section.settings.right_logo | image_url: width: 150 }}" 
+             alt="Logo" 
+             style="max-height:60px;">
+      {% else %}
+        <h2>{{ shop.name }}</h2>
+      {% endif %}
+    </div>
+  </div>
+</header-component>
+
+{% stylesheet %}
+.custom-flex-header__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  gap: 20px;
+}
+
+.custom-flex-header__left,
+.custom-flex-header__middle,
+.custom-flex-header__right {
+  display: flex;
+  align-items: center;
+}
+
+.custom-flex-header__middle {
+  flex-grow: 1;
+  justify-content: center;
+  text-align: center;
+}
+
+.custom-flex-header__button {
+  background: {{ section.settings.button_bg }};
+  color: {{ section.settings.button_color }};
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-flex-header__row {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+{% endstylesheet %}
+
+<script type="module">
+  document.addEventListener('scroll', () => {
+    const header = document.getElementById('custom-flex-header-component');
+    if(header.hasAttribute('sticky')){
+      if(window.scrollY > 50){
+        header.setAttribute('data-sticky-state','active');
+      } else {
+        header.setAttribute('data-sticky-state','idle');
+      }
+    }
+  });
+</script>
 
 {% schema %}
 {
-  "name": "Dynamic Header",
+  "name": "Custom Flex Header",
   "settings": [
     {
       "type": "image_picker",
-      "id": "logo",
-      "label": "Logo"
+      "id": "left_image",
+      "label": "Left Image (optional)"
+    },
+    {
+      "type": "text",
+      "id": "left_button_text",
+      "label": "Left Button Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "left_button_link",
+      "label": "Left Button Link",
+      "default": "/collections/all"
     },
     {
       "type": "text",
@@ -41,22 +124,37 @@
       "default": "Welcome to Our Store!"
     },
     {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "Shop Now"
+      "type": "image_picker",
+      "id": "right_logo",
+      "label": "Right Logo"
     },
     {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link",
-      "default": "/collections/all"
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background Color",
+      "default": "#f7931e"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "options": [
+        { "value": "always", "label": "Always" },
+        { "value": "scroll-up", "label": "On Scroll Up" },
+        { "value": "none", "label": "Never" }
+      ],
+      "default": "always"
     }
   ],
   "presets": [
     {
-      "name": "Header",
-      "category": "Header"
+      "name": "Custom Flex Header"
     }
   ]
 }

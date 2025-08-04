@@ -1,91 +1,62 @@
-{% liquid
-  assign class = 'custom-flex-header'
-%}
-
-<header-component 
-  id="custom-flex-header-component"
-  class="{{ class }}"
+<header-component
+  id="flex-header"
   {% if section.settings.sticky_header != 'none' %}
     sticky="{{ section.settings.sticky_header }}"
   {% endif %}
-  data-skip-node-update
+  style="background-color: {{ section.settings.header_bg_color }}; padding:15px 20px;"
 >
-  <div class="custom-flex-header__row">
-    <!-- Left Button with optional image -->
-    <div class="custom-flex-header__left">
-      {% if section.settings.left_image != blank %}
-        <img src="{{ section.settings.left_image | image_url: width: 100 }}" 
-             alt="Left Icon" 
-             style="max-height:50px; margin-right:10px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; text-align:center;">
+
+    {%- comment -%} Logo {%- endcomment -%}
+    <div>
+      {% if section.settings.use_text_logo %}
+        <h2 style="margin:0; font-weight:bold; font-size:24px; color: {{ section.settings.logo_text_color }};">
+          {{ section.settings.logo_text }}
+        </h2>
+      {% elsif section.settings.logo_image != blank %}
+        <img src="{{ section.settings.logo_image | image_url: width: 150 }}" 
+             alt="Logo" 
+             style="max-height:60px;">
+      {% else %}
+        <h2 style="margin:0; font-weight:bold; font-size:24px; color: {{ section.settings.logo_text_color }};">
+          {{ shop.name }}
+        </h2>
       {% endif %}
-      {% if section.settings.left_button_text != blank %}
-        <a href="{{ section.settings.left_button_link }}" 
-           class="custom-flex-header__button">
-          {{ section.settings.left_button_text }}
+    </div>
+
+    {%- comment -%} Text  {%- endcomment -%}
+    <div style="flex:1; text-align:center;">
+      <p style="margin:0;">{{ section.settings.middle_text }}</p>
+    </div>
+
+    {%- comment -%} Button {%- endcomment -%}
+    <div>
+      {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_link }}" 
+           style="
+             background: {{ section.settings.button_bg }};
+             color: {{ section.settings.button_color }};
+             padding: 10px 18px;
+             border-radius: 6px;
+             text-decoration: none;
+             font-weight: bold;
+             transition: all 0.3s ease;
+             display:inline-block;
+           "
+           onmouseover="this.style.background='{{ section.settings.button_hover_bg }}';this.style.color='{{ section.settings.button_hover_color }}';"
+           onmouseout="this.style.background='{{ section.settings.button_bg }}';this.style.color='{{ section.settings.button_color }}';"
+        >
+          {{ section.settings.button_text }}
         </a>
       {% endif %}
     </div>
 
-    <!-- Middle Text -->
-    <div class="custom-flex-header__middle">
-      <p>{{ section.settings.middle_text }}</p>
-    </div>
-
-    <!-- Right Logo -->
-    <div class="custom-flex-header__right">
-      {% if section.settings.right_logo != blank %}
-        <img src="{{ section.settings.right_logo | image_url: width: 150 }}" 
-             alt="Logo" 
-             style="max-height:60px;">
-      {% else %}
-        <h2>{{ shop.name }}</h2>
-      {% endif %}
-    </div>
   </div>
 </header-component>
 
-{% stylesheet %}
-.custom-flex-header__row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  gap: 20px;
-}
-
-.custom-flex-header__left,
-.custom-flex-header__middle,
-.custom-flex-header__right {
-  display: flex;
-  align-items: center;
-}
-
-.custom-flex-header__middle {
-  flex-grow: 1;
-  justify-content: center;
-  text-align: center;
-}
-
-.custom-flex-header__button {
-  background: {{ section.settings.button_bg }};
-  color: {{ section.settings.button_color }};
-  padding: 10px 18px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-@media screen and (max-width: 749px) {
-  .custom-flex-header__row {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-{% endstylesheet %}
-
 <script type="module">
   document.addEventListener('scroll', () => {
-    const header = document.getElementById('custom-flex-header-component');
+    const header = document.getElementById('flex-header');
     if(header.hasAttribute('sticky')){
       if(window.scrollY > 50){
         header.setAttribute('data-sticky-state','active');
@@ -98,24 +69,30 @@
 
 {% schema %}
 {
-  "name": "Custom Flex Header",
+  "name": "Flex Header",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "left_image",
-      "label": "Left Image (optional)"
+      "type": "checkbox",
+      "id": "use_text_logo",
+      "label": "Use Text Logo",
+      "default": false
     },
     {
       "type": "text",
-      "id": "left_button_text",
-      "label": "Left Button Text",
-      "default": "Learn More"
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "My Store"
     },
     {
-      "type": "url",
-      "id": "left_button_link",
-      "label": "Left Button Link",
-      "default": "/collections/all"
+      "type": "color",
+      "id": "logo_text_color",
+      "label": "Logo Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
     },
     {
       "type": "text",
@@ -124,20 +101,45 @@
       "default": "Welcome to Our Store!"
     },
     {
-      "type": "image_picker",
-      "id": "right_logo",
-      "label": "Right Logo"
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
     },
     {
       "type": "color",
       "id": "button_bg",
-      "label": "Button Background Color",
+      "label": "Button Background",
       "default": "#f7931e"
     },
     {
       "type": "color",
       "id": "button_color",
       "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button Hover Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button Hover Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_bg_color",
+      "label": "Header Background Color",
       "default": "#ffffff"
     },
     {
@@ -154,7 +156,7 @@
   ],
   "presets": [
     {
-      "name": "Custom Flex Header"
+      "name": "Flex Header"
     }
   ]
 }

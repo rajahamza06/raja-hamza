@@ -1,0 +1,279 @@
+<header-component
+  id="flex-header"
+  {% if section.settings.sticky_header != 'none' %}
+    sticky="{{ section.settings.sticky_header }}"
+  {% endif %}
+  style="background-color: {{ section.settings.header_bg_color }};"
+>
+  <div class="header-container">
+    <div class="header-row">
+
+      <!-- Mobile Hamburger -->
+      <button id="mobile-menu-toggle" class="mobile-hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Logo -->
+      <div class="header-logo-wrap">
+        {% if section.settings.use_text_logo %}
+          <h2 class="header-logo" style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};">
+            {{ section.settings.logo_text }}
+          </h2>
+        {% elsif section.settings.logo_image != blank %}
+          <img src="{{ section.settings.logo_image | image_url: width: 150 }}" alt="Logo" class="header-logo-img">
+        {% else %}
+          <h2 class="header-logo" style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};">
+            {{ shop.name }}
+          </h2>
+        {% endif %}
+      </div>
+
+      <!-- Desktop Middle Text -->
+      <div class="header-middle">
+        <p class="header-middle-text" style="text-transform: {{ section.settings.middle_text_transform }};">
+          {{ section.settings.middle_text }}
+        </p>
+      </div>
+
+      <!-- Desktop Button -->
+      <div class="header-button-wrap">
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link }}" class="header-button"
+            style="
+              background: {{ section.settings.button_bg }};
+              color: {{ section.settings.button_color }};
+              text-transform: {{ section.settings.button_text_transform }};
+            "
+            onmouseover="this.style.background='{{ section.settings.button_hover_bg }}';this.style.color='{{ section.settings.button_hover_color }}';"
+            onmouseout="this.style.background='{{ section.settings.button_bg }}';this.style.color='{{ section.settings.button_color }}';"
+          >
+            {% if section.settings.button_icon != blank %}
+              <img src="{{ section.settings.button_icon | image_url: width: 30 }}" alt="" class="header-button-icon">
+            {% endif %}
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Slide Panel -->
+  <div id="mobile-menu-panel" class="mobile-panel {{ section.settings.mobile_menu_direction }}">
+    <div class="mobile-panel-content">
+      <p style="text-transform: {{ section.settings.middle_text_transform }};">
+        {{ section.settings.middle_text }}
+      </p>
+      {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_link }}" class="header-button mobile-btn"
+          style="
+            background: {{ section.settings.button_bg }};
+            color: {{ section.settings.button_color }};
+            text-transform: {{ section.settings.button_text_transform }};
+          "
+          onmouseover="this.style.background='{{ section.settings.button_hover_bg }}';this.style.color='{{ section.settings.button_hover_color }}';"
+          onmouseout="this.style.background='{{ section.settings.button_bg }}';this.style.color='{{ section.settings.button_color }}';"
+        >
+          {% if section.settings.button_icon != blank %}
+            <img src="{{ section.settings.button_icon | image_url: width: 30 }}" alt="" class="header-button-icon">
+          {% endif %}
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+</header-component>
+
+{% style %}
+.header-container {
+  max-width: {{ section.settings.container_width }}px;
+  margin: 0 auto;
+  padding: 15px 20px;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-logo {
+  margin: 0;
+  font-weight: bold;
+  font-size: 24px;
+}
+.header-logo-img { max-height: 60px; }
+
+.header-middle { flex: 1; text-align: center; }
+.header-middle-text { margin: 0; }
+
+.header-button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+.header-button-icon { height: 20px; }
+
+.mobile-hamburger {
+  background: none;
+  border: none;
+  font-size: 28px;
+  display: none;
+  cursor: pointer;
+}
+
+/* Mobile Panel Base */
+.mobile-panel {
+  position: fixed;
+  top: 0;
+  background: {{ section.settings.header_bg_color }};
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 9999;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mobile-panel.right { right: 0; left: auto; transform: translateX(100%); }
+.mobile-panel.top { top:0; left:0; right:0; height:auto; max-width:none; transform: translateY(-100%); }
+
+.mobile-panel.active { transform: translate(0,0); }
+
+.mobile-panel-content { display: flex; flex-direction: column; gap: 20px; }
+
+.mobile-btn { width: fit-content; margin: 0 auto; }
+
+/* Mobile Behavior */
+@media screen and (max-width: 749px) {
+  .header-middle, .header-button-wrap { display: none; }
+  .mobile-hamburger { display: block; }
+  .header-row { justify-content: center; }
+}
+{% endstyle %}
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const panel = document.getElementById('mobile-menu-panel');
+  if(toggleBtn && panel){
+    toggleBtn.addEventListener('click', ()=>{
+      panel.classList.toggle('active');
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Flex Header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_text_logo",
+      "label": "Use Text Logo",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "My Store"
+    },
+    {
+      "type": "color",
+      "id": "logo_text_color",
+      "label": "Logo Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "logo_text_transform",
+      "label": "Logo Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo Image" },
+    { "type": "text", "id": "middle_text", "label": "Middle Text", "default": "Welcome to Our Store!" },
+    {
+      "type": "select",
+      "id": "middle_text_transform",
+      "label": "Middle Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    { "type": "text", "id": "button_text", "label": "Button Text", "default": "Learn More" },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    { "type": "image_picker", "id": "button_icon", "label": "Button Icon (SVG, PNG, JPG)" },
+    { "type": "url", "id": "button_link", "label": "Button Link", "default": "/collections/all" },
+    { "type": "color", "id": "button_bg", "label": "Button Background", "default": "#f7931e" },
+    { "type": "color", "id": "button_color", "label": "Button Text Color", "default": "#ffffff" },
+    { "type": "color", "id": "button_hover_bg", "label": "Button Hover Background", "default": "#000000" },
+    { "type": "color", "id": "button_hover_color", "label": "Button Hover Text", "default": "#ffffff" },
+    { "type": "color", "id": "header_bg_color", "label": "Header Background Color", "default": "#ffffff" },
+    {
+      "type": "select",
+      "id": "mobile_menu_direction",
+      "label": "Mobile Menu Direction",
+      "options": [
+        { "value": "left", "label": "Slide from Left" },
+        { "value": "right", "label": "Slide from Right" },
+        { "value": "top", "label": "Slide from Top" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container Max Width (px)",
+      "min": 600, "max": 1600, "step": 20, "default": 1200
+    },
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "options": [
+        { "value": "always", "label": "Always" },
+        { "value": "scroll-up", "label": "On Scroll Up" },
+        { "value": "none", "label": "Never" }
+      ],
+      "default": "always"
+    }
+  ],
+  "presets": [
+    { "name": "Flex Header" }
+  ]
+}
+{% endschema %}

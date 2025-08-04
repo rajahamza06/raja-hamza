@@ -61,6 +61,8 @@
     </div>
   </div>
 
+  <!-- Mobile Panel and Overlay -->
+  <div id="mobile-overlay" class="mobile-overlay"></div>
   <div id="mobile-menu-panel" class="mobile-panel {{ section.settings.mobile_menu_direction }}">
     <div class="mobile-panel-content">
       <p style="text-transform: {{ section.settings.middle_text_transform }};">
@@ -144,6 +146,7 @@
   transform: scale(1.05);
 }
 
+/* Mobile Hamburger */
 .mobile-hamburger {
   position: relative;
   width: 30px;
@@ -170,6 +173,22 @@
 .mobile-hamburger.active span:nth-child(2) { opacity: 0; }
 .mobile-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translateY(-9px); }
 
+/* Mobile Menu and Overlay */
+.mobile-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 9998;
+}
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 .mobile-panel {
   position: fixed;
   top: 0;
@@ -188,6 +207,7 @@
 .mobile-panel.right { right: 0; left: auto; transform: translateX(100%); }
 .mobile-panel.top { top:0; left:0; right:0; height:auto; max-width:none; transform: translateY(-100%); }
 .mobile-panel.active { transform: translate(0,0); }
+
 .mobile-panel-content { display: flex; flex-direction: column; gap: 20px; }
 .mobile-btn { width: fit-content; margin: 0 auto; }
 
@@ -203,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.getElementById('flex-header');
   const toggleBtn = document.getElementById('mobile-menu-toggle');
   const panel = document.getElementById('mobile-menu-panel');
+  const overlay = document.getElementById('mobile-overlay');
 
   // Sticky header on scroll
   if(header.hasAttribute('sticky')){
@@ -215,12 +236,122 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Mobile menu toggle
+  // Mobile menu toggle with overlay
+  function toggleMenu(){
+    toggleBtn.classList.toggle('active');
+    if(panel) panel.classList.toggle('active');
+    if(overlay) overlay.classList.toggle('active');
+  }
+
   if(toggleBtn){
-    toggleBtn.addEventListener('click', () => {
-      toggleBtn.classList.toggle('active');
-      if(panel) panel.classList.toggle('active');
-    });
+    toggleBtn.addEventListener('click', toggleMenu);
+  }
+  if(overlay){
+    overlay.addEventListener('click', toggleMenu);
   }
 });
 </script>
+
+{% schema %}
+{
+  "name": "Flex Header",
+  "settings": [
+    { "type": "checkbox", "id": "use_text_logo", "label": "Use Text Logo", "default": false },
+    { "type": "text", "id": "logo_text", "label": "Logo Text", "default": "My Store" },
+    { "type": "color", "id": "logo_text_color", "label": "Logo Text Color", "default": "#000000" },
+    {
+      "type": "select",
+      "id": "logo_text_transform",
+      "label": "Logo Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo Image" },
+    { "type": "text", "id": "middle_text", "label": "Middle Text", "default": "Welcome to Our Store!" },
+    {
+      "type": "select",
+      "id": "middle_text_transform",
+      "label": "Middle Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    { "type": "text", "id": "button_text", "label": "Button Text", "default": "Learn More" },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    { "type": "image_picker", "id": "button_icon", "label": "Button Icon (SVG, PNG, JPG)" },
+    { "type": "range", "id": "button_icon_width", "label": "Button Icon Width (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
+    { "type": "range", "id": "button_icon_height", "label": "Button Icon Height (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
+    {
+      "type": "select",
+      "id": "button_icon_fit",
+      "label": "Button Icon Fit",
+      "options": [
+        { "value": "contain", "label": "Contain" },
+        { "value": "cover", "label": "Cover" }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "select",
+      "id": "button_hover_effect",
+      "label": "Button Hover Effect",
+      "options": [
+        { "value": "hover-bg", "label": "Background Change Only" },
+        { "value": "hover-scale", "label": "Scale Only" },
+        { "value": "hover-both", "label": "Background + Scale" }
+      ],
+      "default": "hover-both"
+    },
+    { "type": "url", "id": "button_link", "label": "Button Link", "default": "/collections/all" },
+    { "type": "color", "id": "button_bg", "label": "Button Background", "default": "#f7931e" },
+    { "type": "color", "id": "button_color", "label": "Button Text Color", "default": "#ffffff" },
+    { "type": "color", "id": "button_hover_bg", "label": "Button Hover Background", "default": "#000000" },
+    { "type": "color", "id": "button_hover_color", "label": "Button Hover Text", "default": "#ffffff" },
+    { "type": "color", "id": "header_bg_color", "label": "Header Background Color", "default": "#ffffff" },
+    {
+      "type": "select",
+      "id": "mobile_menu_direction",
+      "label": "Mobile Menu Direction",
+      "options": [
+        { "value": "left", "label": "Slide from Left" },
+        { "value": "right", "label": "Slide from Right" },
+        { "value": "top", "label": "Slide from Top" }
+      ],
+      "default": "left"
+    },
+    { "type": "range", "id": "container_width", "label": "Container Max Width (px)", "min": 600, "max": 1600, "step": 20, "default": 1200 },
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "options": [
+        { "value": "always", "label": "Always" },
+        { "value": "scroll-up", "label": "On Scroll Up" },
+        { "value": "none", "label": "Never" }
+      ],
+      "default": "always"
+    }
+  ],
+  "presets": [{ "name": "Flex Header" }]
+}
+{% endschema %}

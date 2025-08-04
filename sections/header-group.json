@@ -31,6 +31,7 @@
       "block_order": [
         "announcement_BxgCk9"
       ],
+      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
@@ -43,16 +44,115 @@
     },
     "header_section": {
       "type": "header",
+      "blocks": {
+        "header-logo": {
+          "type": "_header-logo",
+          "static": true,
+          "settings": {
+            "hide_logo_on_home_page": false,
+            "custom_height": 20,
+            "custom_height_mobile": 20,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "header-menu": {
+          "type": "_header-menu",
+          "static": true,
+          "settings": {
+            "menu": "main-menu",
+            "menu_style": "collection_images",
+            "featured_products_aspect_ratio": "4 / 5",
+            "featured_collections_aspect_ratio": "16 / 9",
+            "image_border_radius": 0,
+            "product_title_case": "default",
+            "collection_title_case": "default",
+            "color_scheme": "",
+            "menu_font_style": "inverse",
+            "type_font_primary_link": "heading",
+            "type_font_primary_size": "1rem",
+            "type_case_primary_link": "none",
+            "type_font_secondary_link": "subheading",
+            "type_case_secondary_link": "none",
+            "type_font_tertiary_link": "body",
+            "type_case_tertiary_link": "none",
+            "navigation_bar": false,
+            "color_scheme_navigation_bar": "",
+            "drawer_accordion": false,
+            "drawer_accordion_expand_first": false,
+            "drawer_dividers": false
+          },
+          "blocks": {}
+        }
+      },
+      "disabled": true,
       "settings": {
-        "logo": "shopify://shop_images/Group_1000007777.png",
-        "middle_text": "Find the ideal gift for your loved ones.",
-        "button_text": "choose gift",
-        "button_link": "shopify://collections/all"
+        "logo_position": "center",
+        "menu_position": "left",
+        "menu_row": "top",
+        "show_search": true,
+        "search_position": "right",
+        "search_row": "top",
+        "show_country": true,
+        "country_selector_style": true,
+        "show_language": true,
+        "localization_font": "heading",
+        "localization_font_size": "1rem",
+        "localization_position": "right",
+        "localization_row": "top",
+        "section_width": "page-width",
+        "section_height": "standard",
+        "enable_sticky_header": "always",
+        "divider_width": 0,
+        "divider_size": "page-width",
+        "border_width": 0,
+        "color_scheme_top": "",
+        "color_scheme_bottom": "",
+        "color_scheme_transparent": "",
+        "enable_transparent_header_home": false,
+        "home_color_scheme": "default",
+        "enable_transparent_header_product": false,
+        "product_color_scheme": "default",
+        "enable_transparent_header_collection": false,
+        "collection_color_scheme": "default"
+      }
+    },
+    "custom_header_q9TKgT": {
+      "type": "custom-header",
+      "name": "Flex Header",
+      "settings": {
+        "use_text_logo": false,
+        "logo_text": "My Store",
+        "logo_text_color": "#000000",
+        "logo_text_transform": "none",
+        "logo_image": "shopify://shop_images/Group_1000007777.png",
+        "middle_text": "Welcome to Our Store!",
+        "middle_text_transform": "none",
+        "button_text": "Learn More",
+        "button_text_transform": "uppercase",
+        "button_icon": "shopify://shop_images/Line_15.png",
+        "button_icon_width": 20,
+        "button_icon_height": 20,
+        "button_icon_fit": "contain",
+        "button_hover_effect": "hover-both",
+        "button_link": "shopify://collections/all",
+        "button_bg": "#fff544",
+        "button_color": "#000000",
+        "button_hover_bg": "#000000",
+        "button_hover_color": "#ffffff",
+        "header_bg_color": "#ffffff",
+        "mobile_menu_direction": "left",
+        "container_width": 1200,
+        "sticky_header": "always"
       }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "custom_header_q9TKgT"
   ]
 }

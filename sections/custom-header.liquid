@@ -202,13 +202,18 @@
 {% endstyle %}
 
 <script>
+ document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('mobile-menu-toggle');
-  const panel = document.getElementById('mobile-menu-panel');
-  if (toggleBtn && panel) {
+  const panel = document.getElementById('mobile-menu-panel'); // your mobile panel
+
+  if(toggleBtn){
     toggleBtn.addEventListener('click', () => {
-      panel.classList.toggle('active');
+      toggleBtn.classList.toggle('active');
+      if(panel) panel.classList.toggle('active');
     });
   }
+});
+
 </script>
 
 {% schema %}

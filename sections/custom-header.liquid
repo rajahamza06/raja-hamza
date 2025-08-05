@@ -61,27 +61,33 @@
     </div>
   </div>
 
-  <!-- Mobile Panel and Overlay -->
-  <div id="mobile-overlay" class="mobile-overlay"></div>
+  <!-- Mobile Panel -->
   <div id="mobile-menu-panel" class="mobile-panel {{ section.settings.mobile_menu_direction }}">
     <div class="mobile-panel-content">
       <p style="text-transform: {{ section.settings.middle_text_transform }};">
         {{ section.settings.middle_text }}
       </p>
       {% if section.settings.button_text != blank %}
-        <a href="{{ section.settings.button_link }}"
-           class="header-button mobile-btn"
-           style="
-             background: {{ section.settings.button_bg }};
-             color: {{ section.settings.button_color }};
-             text-transform: {{ section.settings.button_text_transform }};
-           ">
-          {% if section.settings.button_icon != blank %}
-            <img src="{{ section.settings.button_icon | image_url: width: 30 }}" alt="" class="header-button-icon">
-          {% endif %}
-          {{ section.settings.button_text }}
-        </a>
-      {% endif %}
+          <a href="{{ section.settings.button_link }}"
+             class="header-button {{ section.settings.button_hover_effect }}"
+             style="
+               background: {{ section.settings.button_bg }};
+               color: {{ section.settings.button_color }};
+               text-transform: {{ section.settings.button_text_transform }};
+             ">
+            {{ section.settings.button_text }}
+            {% if section.settings.button_icon != blank %}
+              <img src="{{ section.settings.button_icon | image_url }}"
+                   alt=""
+                   class="header-button-icon-right"
+                   style="
+                     width: {{ section.settings.button_icon_width }}px;
+                     height: {{ section.settings.button_icon_height }}px;
+                     object-fit: {{ section.settings.button_icon_fit }};
+                   ">
+            {% endif %}
+          </a>
+        {% endif %}
     </div>
   </div>
 </header-component>

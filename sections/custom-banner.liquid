@@ -9,7 +9,6 @@
   "
 >
   <div class="custom-container gift-guide-container">
-
     <!-- Heading + Description Box -->
     <div class="gift-guide-text-box">
       {% if section.settings.heading != blank %}
@@ -51,7 +50,6 @@
         {% endif %}
       </a>
     {% endif %}
-
   </div>
 </section>
 
@@ -74,6 +72,8 @@
 
   .gift-guide-text-box {
     margin-bottom: 50px;
+    width:100%;
+    max-width:483px;
   }
 
   .gift-guide-heading {
@@ -139,30 +139,57 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
     { "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#000000" },
 
-    { "type": "textarea", "id": "subtext", "label": "Description Text", "default": "Discover joy: Your ultimate holiday gift destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Description Text",
+      "default": "Discover joy: Your ultimate holiday gift destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+    },
     { "type": "color", "id": "subtext_color", "label": "Description Color", "default": "#000000" },
 
     { "type": "text", "id": "button_text", "label": "Button Text", "default": "Shop Now" },
     { "type": "url", "id": "button_link", "label": "Button Link", "default": "/collections/all" },
 
     { "type": "image_picker", "id": "button_icon", "label": "Button Icon (SVG, PNG, JPG)" },
-    { "type": "range", "id": "button_icon_width", "label": "Button Icon Width (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
-    { "type": "range", "id": "button_icon_height", "label": "Button Icon Height (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
     {
-      "type": "select", "id": "button_icon_fit", "label": "Button Icon Fit",
+      "type": "range",
+      "id": "button_icon_width",
+      "label": "Button Icon Width (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_icon_height",
+      "label": "Button Icon Height (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "button_icon_fit",
+      "label": "Button Icon Fit",
       "options": [
         { "value": "contain", "label": "Contain" },
         { "value": "cover", "label": "Cover" }
-      ], "default": "contain"
+      ],
+      "default": "contain"
     },
 
     {
-      "type": "select", "id": "button_hover_effect", "label": "Button Hover Effect",
+      "type": "select",
+      "id": "button_hover_effect",
+      "label": "Button Hover Effect",
       "options": [
         { "value": "hover-bg", "label": "Background Change Only" },
         { "value": "hover-scale", "label": "Scale Only" },
         { "value": "hover-both", "label": "Background + Scale" }
-      ], "default": "hover-both"
+      ],
+      "default": "hover-both"
     },
 
     { "type": "color", "id": "button_bg", "label": "Button Background", "default": "#000000" },
@@ -171,13 +198,16 @@
     { "type": "color", "id": "button_hover_color", "label": "Button Hover Text Color", "default": "#ffffff" },
 
     {
-      "type": "select", "id": "button_text_transform", "label": "Button Text Transform",
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button Text Transform",
       "options": [
         { "value": "none", "label": "None" },
         { "value": "uppercase", "label": "Uppercase" },
         { "value": "capitalize", "label": "Capitalize" },
         { "value": "lowercase", "label": "Lowercase" }
-      ], "default": "uppercase"
+      ],
+      "default": "uppercase"
     }
   ],
   "presets": [{ "name": "Gift Guide Section" }]

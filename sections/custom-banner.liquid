@@ -69,120 +69,121 @@
 </section>
 
 {% style %}
-.gift-guide-section {
-  background: var(--desktop-bg) no-repeat center/cover;
-  padding-block: 425px 51px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  transition: background-image 0.3s ease;
-}
-
-.gift-guide-container {
-  width: 100%;
-  max-width: 1320px;
-  margin: 0 auto;
-  padding-inline: 18px;
-}
-
-.gift-guide-text-box {
-  margin-bottom: 50px;
-  max-width: 483px;
-  width: 100%;
-}
-
-.gift-guide-heading {
-  font-size: 70px;
-  font-weight: 500;
-  margin-bottom: 50px;
-  font-family: 'Jost', sans-serif;
-}
-
-.gift-guide-subtext {
-  font-size: 20px;
-  line-height: 1.6;
-  font-weight: 400;
-  margin: 0;
-  font-family: 'Jost', sans-serif;
-}
-
-/* Hide/Show different texts */
-.desktop-only { display: block; }
-.mobile-only { display: none; }
-
-.gift-guide-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 55px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  width: fit-content;
-  background: var(--btn-bg);
-  color: var(--btn-color);
-}
-
-.gift-guide-btn-icon {
-  display: inline-block;
-  transition: filter 0.3s ease;
-}
-
-/* Hover Effects */
-.gift-guide-btn.hover-bg:hover {
-  background: var(--btn-hover-bg);
-  color: var(--btn-hover-color);
-}
-.gift-guide-btn.hover-scale:hover { transform: scale(1.05); }
-.gift-guide-btn.hover-both:hover {
-  background: var(--btn-hover-bg);
-  color: var(--btn-hover-color);
-  transform: scale(1.05);
-}
-
-/* Invert icon on hover if bg changes */
-.gift-guide-btn.hover-bg:hover img,
-.gift-guide-btn.hover-both:hover img {
-  filter: invert(1);
-}
-
-/* Mobile Responsive */
-@media screen and (max-width: 768px) {
   .gift-guide-section {
-    background: var(--mobile-bg) no-repeat center;
-    padding-block: 110px 70px;
-    min-height: 455px;
+    background: var(--desktop-bg) no-repeat center/cover;
+    padding-block: 425px 51px;
     display: flex;
-    align-items: unset;
-    background-position: bottom;
+    justify-content: flex-start;
+    align-items: center;
+    transition: background-image 0.3s ease;
   }
 
   .gift-guide-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
+    max-width: 1340px;
+    margin: 0 auto;
+    padding-inline: 20px;
   }
 
   .gift-guide-text-box {
-    text-align: center;
-    margin-bottom: 0;
-    max-width: 100%;
+    margin-bottom: 50px;
+    max-width: 483px;
+    width: 100%;
   }
 
   .gift-guide-heading {
-    font-size: 30px;
-    margin-bottom: 24px;
+    font-size: 70px;
+    font-weight: 500;
+    margin-bottom: 50px;
+    font-family: 'Jost', sans-serif;
   }
 
-  .gift-guide-subtext { font-size: 16px; }
+  .gift-guide-subtext {
+    font-size: 20px;
+    line-height: 1.6;
+    font-weight: 400;
+    margin: 0;
+    font-family: 'Jost', sans-serif;
+  }
+
+  /* Hide/Show different texts */
+  .desktop-only { display: block; }
+  .mobile-only { display: none; }
 
   .gift-guide-btn {
-    margin: 0 auto;
-    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 55px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: fit-content;
+    background: var(--btn-bg);
+    color: var(--btn-color);
   }
 
-  .desktop-only { display: none; }
-  .mobile-only { display: block; }
-}
+  .gift-guide-btn-icon {
+    display: inline-block;
+    transition: filter 0.3s ease;
+  }
+
+  /* Hover Effects */
+  .gift-guide-btn.hover-bg:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-color);
+  }
+  .gift-guide-btn.hover-scale:hover { transform: scale(1.05); }
+  .gift-guide-btn.hover-both:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-color);
+    transform: scale(1.05);
+  }
+
+  /* Invert icon on hover if bg changes */
+  .gift-guide-btn.hover-bg:hover img,
+  .gift-guide-btn.hover-both:hover img {
+    filter: invert(1);
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 768px) {
+    .gift-guide-section {
+      background: var(--mobile-bg) no-repeat center;
+      padding-block: 110px 70px;
+      min-height: 455px;
+      display: flex;
+      align-items: unset;
+      background-position: bottom;
+    }
+
+    .gift-guide-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 140px;
+    }
+
+    .gift-guide-text-box {
+      text-align: center;
+      margin-bottom: 0;
+      max-width: 100%;
+    }
+
+    .gift-guide-heading {
+      font-size: 30px;
+      margin-bottom: 24px;
+    }
+
+    .gift-guide-subtext { font-size: 16px; }
+
+    .gift-guide-btn {
+      margin: 0 auto;
+      justify-content: center;
+    }
+
+    .desktop-only { display: none; }
+    .mobile-only { display: block; }
+  }
 {% endstyle %}
 
 {% schema %}
@@ -214,8 +215,24 @@
     { "type": "url", "id": "button_link", "label": "Button Link", "default": "/collections/all" },
 
     { "type": "image_picker", "id": "button_icon", "label": "Button Icon (SVG, PNG, JPG)" },
-    { "type": "range", "id": "button_icon_width", "label": "Button Icon Width (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
-    { "type": "range", "id": "button_icon_height", "label": "Button Icon Height (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
+    {
+      "type": "range",
+      "id": "button_icon_width",
+      "label": "Button Icon Width (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_icon_height",
+      "label": "Button Icon Height (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
     {
       "type": "select",
       "id": "button_icon_fit",

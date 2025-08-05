@@ -42,22 +42,30 @@
           <a href="{{ section.settings.button_link }}"
              class="header-button {{ section.settings.button_hover_effect }}"
              style="
-            --btn-bg: {{ section.settings.button_bg }};
-            --btn-color: {{ section.settings.button_color }};
-            --btn-hover-bg: {{ section.settings.button_hover_bg }};
-            --btn-hover-color: {{ section.settings.button_hover_color }};
-            text-transform: {{ section.settings.button_text_transform }};
+               --btn-bg: {{ section.settings.button_bg }};
+               --btn-color: {{ section.settings.button_color }};
+               --btn-hover-bg: {{ section.settings.button_hover_bg }};
+               --btn-hover-color: {{ section.settings.button_hover_color }};
+               text-transform: {{ section.settings.button_text_transform }};
              ">
             {{ section.settings.button_text }}
+            
             {% if section.settings.button_icon != blank %}
-              <img src="{{ section.settings.button_icon | image_url }}"
-                   alt=""
-                   class="header-button-icon-right"
-                   style="
-                     width: {{ section.settings.button_icon_width }}px;
-                     height: {{ section.settings.button_icon_height }}px;
-                     object-fit: {{ section.settings.button_icon_fit }};
-                   ">
+              {% assign icon_ext = section.settings.button_icon | split: '.' | last %}
+              {% if icon_ext == 'svg' %}
+                <span class="header-button-icon-right">
+                  {{ section.settings.button_icon | file_url | inline_svg }}
+                </span>
+              {% else %}
+                <img src="{{ section.settings.button_icon | image_url }}"
+                     alt=""
+                     class="header-button-icon-right"
+                     style="
+                       width: {{ section.settings.button_icon_width }}px;
+                       height: {{ section.settings.button_icon_height }}px;
+                       object-fit: {{ section.settings.button_icon_fit }};
+                     ">
+              {% endif %}
             {% endif %}
           </a>
         {% endif %}
@@ -75,20 +83,28 @@
         <a href="{{ section.settings.button_link }}"
            class="header-button {{ section.settings.button_hover_effect }}"
            style="
-             background: {{ section.settings.button_bg }};
-             color: {{ section.settings.button_color }};
+             --btn-bg: {{ section.settings.button_bg }};
+             --btn-color: {{ section.settings.button_color }};
+             --btn-hover-bg: {{ section.settings.button_hover_bg }};
+             --btn-hover-color: {{ section.settings.button_hover_color }};
              text-transform: {{ section.settings.button_text_transform }};
            ">
           {{ section.settings.button_text }}
           {% if section.settings.button_icon != blank %}
-            <img src="{{ section.settings.button_icon | image_url }}"
-                 alt=""
-                 class="header-button-icon-right"
-                 style="
-                   width: {{ section.settings.button_icon_width }}px;
-                   height: {{ section.settings.button_icon_height }}px;
-                   object-fit: {{ section.settings.button_icon_fit }};
-                 ">
+            {% if icon_ext == 'svg' %}
+              <span class="header-button-icon-right">
+                {{ section.settings.button_icon | file_url | inline_svg }}
+              </span>
+            {% else %}
+              <img src="{{ section.settings.button_icon | image_url }}"
+                   alt=""
+                   class="header-button-icon-right"
+                   style="
+                     width: {{ section.settings.button_icon_width }}px;
+                     height: {{ section.settings.button_icon_height }}px;
+                     object-fit: {{ section.settings.button_icon_fit }};
+                   ">
+            {% endif %}
           {% endif %}
         </a>
       {% endif %}
@@ -140,25 +156,26 @@
   background: var(--btn-bg);
   color: var(--btn-color);
 }
-
 .header-button-icon-right { display: inline-block; }
 
-/* Hover effects using variables */
+.header-button-icon-right svg {
+  width: {{ section.settings.button_icon_width }}px;
+  height: {{ section.settings.button_icon_height }}px;
+  fill: currentColor;
+  transition: fill 0.3s ease;
+}
+
+/* Hover Effects */
 .header-button.hover-bg:hover {
   background: var(--btn-hover-bg);
   color: var(--btn-hover-color);
 }
-
-.header-button.hover-scale:hover {
-  transform: scale(1.05);
-}
-
+.header-button.hover-scale:hover { transform: scale(1.05); }
 .header-button.hover-both:hover {
   background: var(--btn-hover-bg);
   color: var(--btn-hover-color);
   transform: scale(1.05);
 }
-
 
 /* Mobile Hamburger */
 .mobile-hamburger {
@@ -182,17 +199,16 @@
   border-radius: 2px;
   transition: all 0.3s ease;
 }
-  .mobile-hamburger.active span:nth-child(1) {
-    transform: rotate(45deg);
-    position: absolute;
-    top: 50%;}
-  .mobile-hamburger.active span:nth-child(2) {
-     opacity: 0; 
-    }
-  .mobile-hamburger.active span:nth-child(3) { 
-    transform: rotate(-45deg);
-    position: absolute;
-    top: 50%; 
+.mobile-hamburger.active span:nth-child(1) {
+  transform: rotate(45deg);
+  position: absolute;
+  top: 50%;
+}
+.mobile-hamburger.active span:nth-child(2) { opacity: 0; }
+.mobile-hamburger.active span:nth-child(3) { 
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 50%;
 }
 
 /* Mobile Panel */
@@ -258,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
 
 {% schema %}
 {

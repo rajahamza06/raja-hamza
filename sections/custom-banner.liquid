@@ -72,7 +72,7 @@
   .gift-guide-container {
     width: 100%;
     max-width: 1320px;
-    margin: auto;
+    margin: 0 auto;
     padding-inline:18px;
   }
 
@@ -139,7 +139,15 @@
       background-image: var(--mobile-bg);
       background-size: contain;
       background-position: center;
-      padding-block:110px 40px;
+      padding-block:110px 70px;
+      min-height: 455px;
+    display: flex;
+    align-items: unset;
+    }
+    .gift-guide-container{
+            display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     }
     .gift-guide-text-box {
     margin-bottom: 0px;
@@ -154,7 +162,9 @@
     font-size: 16px;
   }
   .gift-guide-btn {
-    margin:auto}
+    margin:0 auto;
+    justify-content: center;
+}
   }
 {% endstyle %}
 

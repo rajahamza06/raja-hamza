@@ -232,10 +232,18 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "product_grid_quickview_txW7WV": {
+      "type": "product-grid-quickview",
+      "name": "Product Grid with Quick View",
+      "settings": {
+        "collection": "quickview"
+      }
     }
   },
   "order": [
     "custom_banner_WHFJ9a",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "product_grid_quickview_txW7WV"
   ]
 }

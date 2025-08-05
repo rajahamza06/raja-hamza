@@ -15,15 +15,19 @@
       <!-- Logo -->
       <div class="header-logo-wrap">
         {% if section.settings.use_text_logo %}
-          <h2 class="header-logo"
-              style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};">
+          <h2
+            class="header-logo"
+            style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
+          >
             {{ section.settings.logo_text }}
           </h2>
         {% elsif section.settings.logo_image != blank %}
           <img src="{{ section.settings.logo_image | image_url: width: 150 }}" alt="Logo" class="header-logo-img">
         {% else %}
-          <h2 class="header-logo"
-              style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};">
+          <h2
+            class="header-logo"
+            style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
+          >
             {{ shop.name }}
           </h2>
         {% endif %}
@@ -39,17 +43,19 @@
       <!-- Button -->
       <div class="header-button-wrap">
         {% if section.settings.button_text != blank %}
-          <a href="{{ section.settings.button_link }}"
-             class="header-button {{ section.settings.button_hover_effect }}"
-             style="
-               --btn-bg: {{ section.settings.button_bg }};
-               --btn-color: {{ section.settings.button_color }};
-               --btn-hover-bg: {{ section.settings.button_hover_bg }};
-               --btn-hover-color: {{ section.settings.button_hover_color }};
-               text-transform: {{ section.settings.button_text_transform }};
-             ">
+          <a
+            href="{{ section.settings.button_link }}"
+            class="header-button {{ section.settings.button_hover_effect }}"
+            style="
+              --btn-bg: {{ section.settings.button_bg }};
+              --btn-color: {{ section.settings.button_color }};
+              --btn-hover-bg: {{ section.settings.button_hover_bg }};
+              --btn-hover-color: {{ section.settings.button_hover_color }};
+              text-transform: {{ section.settings.button_text_transform }};
+            "
+          >
             {{ section.settings.button_text }}
-            
+
             {% if section.settings.button_icon != blank %}
               {% assign icon_ext = section.settings.button_icon | split: '.' | last %}
               {% if icon_ext == 'svg' %}
@@ -57,14 +63,16 @@
                   {{ section.settings.button_icon | file_url | inline_svg }}
                 </span>
               {% else %}
-                <img src="{{ section.settings.button_icon | image_url }}"
-                     alt=""
-                     class="header-button-icon-right"
-                     style="
-                       width: {{ section.settings.button_icon_width }}px;
-                       height: {{ section.settings.button_icon_height }}px;
-                       object-fit: {{ section.settings.button_icon_fit }};
-                     ">
+                <img
+                  src="{{ section.settings.button_icon | image_url }}"
+                  alt=""
+                  class="header-button-icon-right"
+                  style="
+                    width: {{ section.settings.button_icon_width }}px;
+                    height: {{ section.settings.button_icon_height }}px;
+                    object-fit: {{ section.settings.button_icon_fit }};
+                  "
+                >
               {% endif %}
             {% endif %}
           </a>
@@ -80,15 +88,17 @@
         {{ section.settings.middle_text }}
       </p>
       {% if section.settings.button_text != blank %}
-        <a href="{{ section.settings.button_link }}"
-           class="header-button {{ section.settings.button_hover_effect }}"
-           style="
-             --btn-bg: {{ section.settings.button_bg }};
-             --btn-color: {{ section.settings.button_color }};
-             --btn-hover-bg: {{ section.settings.button_hover_bg }};
-             --btn-hover-color: {{ section.settings.button_hover_color }};
-             text-transform: {{ section.settings.button_text_transform }};
-           ">
+        <a
+          href="{{ section.settings.button_link }}"
+          class="header-button {{ section.settings.button_hover_effect }}"
+          style="
+            --btn-bg: {{ section.settings.button_bg }};
+            --btn-color: {{ section.settings.button_color }};
+            --btn-hover-bg: {{ section.settings.button_hover_bg }};
+            --btn-hover-color: {{ section.settings.button_hover_color }};
+            text-transform: {{ section.settings.button_text_transform }};
+          "
+        >
           {{ section.settings.button_text }}
           {% if section.settings.button_icon != blank %}
             {% if icon_ext == 'svg' %}
@@ -96,14 +106,16 @@
                 {{ section.settings.button_icon | file_url | inline_svg }}
               </span>
             {% else %}
-              <img src="{{ section.settings.button_icon | image_url }}"
-                   alt=""
-                   class="header-button-icon-right"
-                   style="
-                     width: {{ section.settings.button_icon_width }}px;
-                     height: {{ section.settings.button_icon_height }}px;
-                     object-fit: {{ section.settings.button_icon_fit }};
-                   ">
+              <img
+                src="{{ section.settings.button_icon | image_url }}"
+                alt=""
+                class="header-button-icon-right"
+                style="
+                  width: {{ section.settings.button_icon_width }}px;
+                  height: {{ section.settings.button_icon_height }}px;
+                  object-fit: {{ section.settings.button_icon_fit }};
+                "
+              >
             {% endif %}
           {% endif %}
         </a>
@@ -113,173 +125,174 @@
 </header-component>
 
 {% style %}
-#flex-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 10000;
-  transition: all 0.3s ease;
-}
-#flex-header[data-sticky-state='active'] {
-  background-color: {{ section.settings.header_bg_color }};
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+    #flex-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10000;
+      transition: all 0.3s ease;
+    }
+    #flex-header[data-sticky-state='active'] {
+      background-color: {{ section.settings.header_bg_color }};
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-.header-container {
-  max-width: {{ section.settings.container_width }}px;
-  margin: 0 auto;
-  padding: 23px 15px;
-}
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.header-logo { margin: 0; font-weight: bold; font-size: 24px; }
-.header-logo-img { max-height: 60px; }
-.header-middle { flex: 1; text-align: center; }
-.header-middle-text { margin: 0; }
+    .header-container {
+      max-width: {{ section.settings.container_width }}px;
+      margin: 0 auto;
+      padding: 23px 15px;
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .header-logo { margin: 0; font-weight: bold; font-size: 24px; }
+    .header-logo-img { max-height: 60px; }
+    .header-middle { flex: 1; text-align: center; }
+    .header-middle-text { margin: 0; }
 
-.header-button-wrap { display: inline-block; }
+    .header-button-wrap { display: inline-block; }
 
-.header-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 41px;
-  text-align: center;
-  text-decoration: none;
-  width: fit-content;
-  margin: auto;
-  transition: all 0.3s ease;
-  background: var(--btn-bg);
-  color: var(--btn-color);
-}
-.header-button-icon-right { display: inline-block; }
+    .header-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 41px;
+      text-align: center;
+      text-decoration: none;
+      width: fit-content;
+      margin: auto;
+      transition: all 0.3s ease;
+      background: var(--btn-bg);
+      color: var(--btn-color);
+    }
+    .header-button-icon-right { display: inline-block; }
 
-.header-button-icon-right svg {
-  width: {{ section.settings.button_icon_width }}px;
-  height: {{ section.settings.button_icon_height }}px;
-  fill: currentColor;
-  transition: fill 0.3s ease;
-}
+    .header-button-icon-right svg {
+      width: {{ section.settings.button_icon_width }}px;
+      height: {{ section.settings.button_icon_height }}px;
+      fill: currentColor;
+      transition: fill 0.3s ease;
+    }
 
 
-.header-button.hover-bg:hover {
-  background: var(--btn-hover-bg);
-  color: var(--btn-hover-color);
-}
-.header-button.hover-scale:hover { transform: scale(1.05); }
-.header-button.hover-both:hover {
-  background: var(--btn-hover-bg);
-  color: var(--btn-hover-color);
-  transform: scale(1.05);
-}
-
-.header-button.hover img{
-    filter:invert;
-}
-
-/* Mobile Hamburger */
-.mobile-hamburger {
-  position: relative;
-  width: 30px;
-  height: 22px;
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 10001;
-}
-.mobile-hamburger span {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background-color: #000;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-.mobile-hamburger.active span:nth-child(1) {
-  transform: rotate(45deg);
-  position: absolute;
-  top: 50%;
-}
-.mobile-hamburger.active span:nth-child(2) { opacity: 0; }
-.mobile-hamburger.active span:nth-child(3) { 
-  transform: rotate(-45deg);
-  position: absolute;
-  top: 50%;
-}
-
-/* Mobile Panel */
-.mobile-panel {
-  position: absolute;
-  top: 100%;
-  background: {{ section.settings.header_bg_color }};
-  width: 100%;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  z-index: 9999;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-.mobile-panel.right { right: 0; left: auto; transform: translateX(100%); }
-.mobile-panel.top { top:0; left:0; right:0; transform: translateY(-100%); }
-.mobile-panel.active { transform: translate(0,0); }
-.mobile-panel.top.active { transform: translateY(65px); }
-
-.mobile-panel-content { display: flex; flex-direction: column; gap: 20px; }
-.mobile-btn { width: fit-content; margin: 0 auto; }
-
-@media screen and (max-width: 749px) {
-  .header-middle, .header-button-wrap { display: none; }
-  .mobile-hamburger { display: flex; }
-  .header-row {
-    display: grid;
-    grid-template-columns: 40px 1fr 40px;
-    align-items: center;
-    justify-items: center;
+    .header-button.hover-bg:hover {
+      background: var(--btn-hover-bg);
+      color: var(--btn-hover-color);
+    }
+    .header-button.hover-scale:hover {
+      transform: scale(1.05);
   }
-  .mobile-hamburger { justify-self: start; }
-  .header-logo-wrap { grid-column: 2; }
-}
+    .header-button.hover-both:hover {
+      background: var(--btn-hover-bg);
+      color: var(--btn-hover-color);
+      transform: scale(1.05);
+    }
+
+    .header-button.hover img{
+    filter: invert(1);
+    }
+
+    /* Mobile Hamburger */
+    .mobile-hamburger {
+      position: relative;
+      width: 30px;
+      height: 22px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 10001;
+    }
+    .mobile-hamburger span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: #000;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .mobile-hamburger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      position: absolute;
+      top: 50%;
+    }
+    .mobile-hamburger.active span:nth-child(2) { opacity: 0; }
+    .mobile-hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      position: absolute;
+      top: 50%;
+    }
+
+    /* Mobile Panel */
+    .mobile-panel {
+      position: absolute;
+      top: 100%;
+      background: {{ section.settings.header_bg_color }};
+      width: 100%;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .mobile-panel.right { right: 0; left: auto; transform: translateX(100%); }
+    .mobile-panel.top { top:0; left:0; right:0; transform: translateY(-100%); }
+    .mobile-panel.active { transform: translate(0,0); }
+    .mobile-panel.top.active { transform: translateY(65px); }
+
+    .mobile-panel-content { display: flex; flex-direction: column; gap: 20px; }
+    .mobile-btn { width: fit-content; margin: 0 auto; }
+
+    @media screen and (max-width: 749px) {
+      .header-middle, .header-button-wrap { display: none; }
+      .mobile-hamburger { display: flex; }
+      .header-row {
+        display: grid;
+        grid-template-columns: 40px 1fr 40px;
+        align-items: center;
+        justify-items: center;
+      }
+      .mobile-hamburger { justify-self: start; }
+      .header-logo-wrap { grid-column: 2; }
+    }
 {% endstyle %}
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const header = document.getElementById('flex-header');
-  const toggleBtn = document.getElementById('mobile-menu-toggle');
-  const panel = document.getElementById('mobile-menu-panel');
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('flex-header');
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const panel = document.getElementById('mobile-menu-panel');
 
-  // Sticky header
-  if (header.hasAttribute('sticky')) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.setAttribute('data-sticky-state', 'active');
-      } else {
-        header.setAttribute('data-sticky-state', 'idle');
-      }
-    });
-  }
+    // Sticky header
+    if (header.hasAttribute('sticky')) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.setAttribute('data-sticky-state', 'active');
+        } else {
+          header.setAttribute('data-sticky-state', 'idle');
+        }
+      });
+    }
 
-  // Mobile toggle
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      toggleBtn.classList.toggle('active');
-      if (panel) panel.classList.toggle('active');
-    });
-  }
-});
+    // Mobile toggle
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        toggleBtn.classList.toggle('active');
+        if (panel) panel.classList.toggle('active');
+      });
+    }
+  });
 </script>
-
 
 {% schema %}
 {
@@ -289,52 +302,83 @@ document.addEventListener('DOMContentLoaded', () => {
     { "type": "text", "id": "logo_text", "label": "Logo Text", "default": "My Store" },
     { "type": "color", "id": "logo_text_color", "label": "Logo Text Color", "default": "#000000" },
     {
-      "type": "select", "id": "logo_text_transform", "label": "Logo Text Transform",
+      "type": "select",
+      "id": "logo_text_transform",
+      "label": "Logo Text Transform",
       "options": [
         { "value": "none", "label": "None" },
         { "value": "uppercase", "label": "Uppercase" },
         { "value": "capitalize", "label": "Capitalize" },
         { "value": "lowercase", "label": "Lowercase" }
-      ], "default": "none"
+      ],
+      "default": "none"
     },
     { "type": "image_picker", "id": "logo_image", "label": "Logo Image" },
     { "type": "text", "id": "middle_text", "label": "Middle Text", "default": "Welcome to Our Store!" },
     {
-      "type": "select", "id": "middle_text_transform", "label": "Middle Text Transform",
+      "type": "select",
+      "id": "middle_text_transform",
+      "label": "Middle Text Transform",
       "options": [
         { "value": "none", "label": "None" },
         { "value": "uppercase", "label": "Uppercase" },
         { "value": "capitalize", "label": "Capitalize" },
         { "value": "lowercase", "label": "Lowercase" }
-      ], "default": "none"
+      ],
+      "default": "none"
     },
     { "type": "text", "id": "button_text", "label": "Button Text", "default": "Learn More" },
     {
-      "type": "select", "id": "button_text_transform", "label": "Button Text Transform",
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button Text Transform",
       "options": [
         { "value": "none", "label": "None" },
         { "value": "uppercase", "label": "Uppercase" },
         { "value": "capitalize", "label": "Capitalize" },
         { "value": "lowercase", "label": "Lowercase" }
-      ], "default": "uppercase"
+      ],
+      "default": "uppercase"
     },
     { "type": "image_picker", "id": "button_icon", "label": "Button Icon (SVG, PNG, JPG)" },
-    { "type": "range", "id": "button_icon_width", "label": "Button Icon Width (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
-    { "type": "range", "id": "button_icon_height", "label": "Button Icon Height (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
     {
-      "type": "select", "id": "button_icon_fit", "label": "Button Icon Fit",
+      "type": "range",
+      "id": "button_icon_width",
+      "label": "Button Icon Width (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_icon_height",
+      "label": "Button Icon Height (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "button_icon_fit",
+      "label": "Button Icon Fit",
       "options": [
         { "value": "contain", "label": "Contain" },
         { "value": "cover", "label": "Cover" }
-      ], "default": "contain"
+      ],
+      "default": "contain"
     },
     {
-      "type": "select", "id": "button_hover_effect", "label": "Button Hover Effect",
+      "type": "select",
+      "id": "button_hover_effect",
+      "label": "Button Hover Effect",
       "options": [
         { "value": "hover-bg", "label": "Background Change Only" },
         { "value": "hover-scale", "label": "Scale Only" },
         { "value": "hover-both", "label": "Background + Scale" }
-      ], "default": "hover-both"
+      ],
+      "default": "hover-both"
     },
     { "type": "url", "id": "button_link", "label": "Button Link", "default": "/collections/all" },
     { "type": "color", "id": "button_bg", "label": "Button Background", "default": "#f7931e" },
@@ -343,21 +387,35 @@ document.addEventListener('DOMContentLoaded', () => {
     { "type": "color", "id": "button_hover_color", "label": "Button Hover Text", "default": "#ffffff" },
     { "type": "color", "id": "header_bg_color", "label": "Header Background Color", "default": "#ffffff" },
     {
-      "type": "select", "id": "mobile_menu_direction", "label": "Mobile Menu Direction",
+      "type": "select",
+      "id": "mobile_menu_direction",
+      "label": "Mobile Menu Direction",
       "options": [
         { "value": "left", "label": "Slide from Left" },
         { "value": "right", "label": "Slide from Right" },
         { "value": "top", "label": "Slide from Top" }
-      ], "default": "left"
+      ],
+      "default": "left"
     },
-    { "type": "range", "id": "container_width", "label": "Container Max Width (px)", "min": 600, "max": 1600, "step": 20, "default": 1200 },
     {
-      "type": "select", "id": "sticky_header", "label": "Sticky Header",
+      "type": "range",
+      "id": "container_width",
+      "label": "Container Max Width (px)",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "default": 1200
+    },
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "label": "Sticky Header",
       "options": [
         { "value": "always", "label": "Always" },
         { "value": "scroll-up", "label": "On Scroll Up" },
         { "value": "none", "label": "Never" }
-      ], "default": "always"
+      ],
+      "default": "always"
     }
   ],
   "presets": [{ "name": "Flex Header" }]

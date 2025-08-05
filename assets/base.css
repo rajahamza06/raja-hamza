@@ -4247,11 +4247,3 @@ text-component {
     font-size: max(1rem, 100%);
   }
 }
-
-
-/* ------------ */
-.custom-container{
-  width:100%
-  max-width:1320px;
-  margin:auto;
-}

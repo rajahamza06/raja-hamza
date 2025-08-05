@@ -59,89 +59,90 @@
 </section>
 
 {% style %}
-.gift-guide-section {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  padding-block: 425px 51px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.gift-guide-container {
-  width: 100%;
-  max-width: 1320px;
-  margin: auto;
-}
-
-.gift-guide-text-box {
-  margin-bottom: 50px;
-  width:100%;
-  max-width:483px;
-}
-
-.gift-guide-heading {
-  font-size: 70px;
-  font-weight: 500;
-  margin-bottom: 50px;
-  font-family: 'Jost', sans-serif;
-}
-
-.gift-guide-subtext {
-  font-size: 20px;
-  line-height: 1.6;
-  font-weight: 400;
-  margin: 0;
-  font-family: 'Jost', sans-serif;
-}
-
-.gift-guide-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 55px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  width: fit-content;
-  background: var(--btn-bg);
-  color: var(--btn-color);
-}
-
-.gift-guide-btn-icon {
-  display: inline-block;
-  transition: filter 0.3s ease;
-}
-
-/* Hover Effects */
-.gift-guide-btn.hover-bg:hover {
-  background: var(--btn-hover-bg);
-  color: var(--btn-hover-color);
-}
-.gift-guide-btn.hover-scale:hover {
-  transform: scale(1.05);
-}
-.gift-guide-btn.hover-both:hover {
-  background: var(--btn-hover-bg);
-  color: var(--btn-hover-color);
-  transform: scale(1.05);
-}
-/* Invert icon color when background changes */
-.gift-guide-btn.hover-bg:hover img,
-.gift-guide-btn.hover-both:hover img{
-  filter: invert(1);
-}
-
-/* Mobile Responsive */
-@media screen and (max-width: 768px) {
   .gift-guide-section {
-    background-image: var(--mobile-bg);
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    padding-block: 425px 51px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
-  .gift-guide-container { max-width: 100%; }
-  .gift-guide-text-box { text-align: center; margin-bottom: 30px; }
-}
+
+  .gift-guide-container {
+    width: 100%;
+    max-width: 1320px;
+    margin: auto;
+  }
+
+  .gift-guide-text-box {
+    margin-bottom: 50px;
+    width:100%;
+    max-width:483px;
+  }
+
+  .gift-guide-heading {
+    font-size: 70px;
+    font-weight: 500;
+    margin-bottom: 50px;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .gift-guide-subtext {
+    font-size: 20px;
+    line-height: 1.6;
+    font-weight: 400;
+    margin: 0;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .gift-guide-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 55px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: fit-content;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+  }
+
+  .gift-guide-btn-icon {
+    display: inline-block;
+    transition: filter 0.3s ease;
+  }
+
+  /* Hover Effects */
+  .gift-guide-btn.hover-bg:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-color);
+  }
+  .gift-guide-btn.hover-scale:hover {
+    transform: scale(1.05);
+  }
+  .gift-guide-btn.hover-both:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-color);
+    transform: scale(1.05);
+  }
+  /* Invert icon color when background changes */
+  .gift-guide-btn.hover-bg:hover img,
+  .gift-guide-btn.hover-both:hover img{
+    filter: invert(1);
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 768px) {
+    .gift-guide-section {
+      background-image: var(--mobile-bg);
+      background-size: cover;
+      background-position: center;
+    }
+    .gift-guide-container { max-width: 100%;
+  padding:50px 18px 40px }
+    .gift-guide-text-box { text-align: center; margin-bottom: 30px; }
+  }
 {% endstyle %}
 
 {% schema %}

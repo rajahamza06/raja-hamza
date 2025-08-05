@@ -143,8 +143,8 @@
         "button_color": "#000000",
         "button_hover_bg": "#000000",
         "button_hover_color": "#ffffff",
-        "header_bg_color": "#ffffff",
-        "mobile_menu_direction": "left",
+        "header_bg_color": "#f7f7f7",
+        "mobile_menu_direction": "top",
         "container_width": 1200,
         "sticky_header": "always"
       }

@@ -124,10 +124,10 @@
       "type": "custom-header",
       "name": "Flex Header",
       "settings": {
-        "use_text_logo": false,
-        "logo_text": "My Store",
+        "use_text_logo": true,
+        "logo_text": "tisso vison",
         "logo_text_color": "#000000",
-        "logo_text_transform": "none",
+        "logo_text_transform": "uppercase",
         "logo_image": "shopify://shop_images/Group_1000007777.png",
         "middle_text": "Find the ideal gift for your loved ones.",
         "middle_text_transform": "none",

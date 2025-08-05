@@ -176,7 +176,7 @@
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 10001;
+    z-index: 999;
   }
   .mobile-hamburger span {
     display: block;
@@ -216,9 +216,25 @@
     flex-direction: column;
     justify-content: center;
   }
-  .mobile-panel.right { right: 0; left: auto; transform: translateX(100%); }
-  .mobile-panel.top { top:0; left:0; right:0; height:auto; max-width:none; transform: translateY(-100%); }
-  .mobile-panel.active { transform: translate(0,0); }
+  .mobile-panel.right {
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+ }
+  .mobile-panel.top {
+    top:0;
+    left:0; 
+    right:0; 
+    height:auto; 
+    max-width:none; 
+    transform: translateY(-100%); 
+}
+  .mobile-panel.active {
+    transform: translate(0,0); 
+}
+  .mobile-panel.top.active {
+    transform: translate(0, 65px);
+}
 
   .mobile-panel-content { display: flex; flex-direction: column; gap: 20px; }
   .mobile-btn { width: fit-content; margin: 0 auto; }

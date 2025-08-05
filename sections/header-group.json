@@ -137,7 +137,7 @@
         "button_icon_width": 20,
         "button_icon_height": 20,
         "button_icon_fit": "contain",
-        "button_hover_effect": "hover-bg",
+        "button_hover_effect": "hover-both",
         "button_link": "shopify://collections/all",
         "button_bg": "#fff544",
         "button_color": "#000000",

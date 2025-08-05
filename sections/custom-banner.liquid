@@ -73,6 +73,7 @@
     width: 100%;
     max-width: 1320px;
     margin: auto;
+    padding-inline:18px;
   }
 
   .gift-guide-text-box {
@@ -136,11 +137,10 @@
   @media screen and (max-width: 768px) {
     .gift-guide-section {
       background-image: var(--mobile-bg);
-      background-size: cover;
+      background-size: contain;
       background-position: center;
+      padding:50px 40px;
     }
-    .gift-guide-container { max-width: 100%;
-  padding:50px 18px 40px }
     .gift-guide-text-box { text-align: center; margin-bottom: 30px; }
   }
 {% endstyle %}

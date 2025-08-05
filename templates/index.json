@@ -9,6 +9,29 @@
  */
 {
   "sections": {
+    "custom_banner_WHFJ9a": {
+      "type": "custom-banner",
+      "name": "Gift Guide Section",
+      "settings": {
+        "bg_color": "#ffffff",
+        "heading": "The Gift Guide",
+        "heading_color": "#000000",
+        "subtext": "Discover joy: Your ultimate holiday gift destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "subtext_color": "#000000",
+        "button_text": "Shop Now",
+        "button_link": "shopify://collections/all",
+        "button_icon": "shopify://shop_images/Line_15.svg",
+        "button_icon_width": 20,
+        "button_icon_height": 20,
+        "button_icon_fit": "contain",
+        "button_hover_effect": "hover-both",
+        "button_bg": "#000000",
+        "button_color": "#ffffff",
+        "button_hover_bg": "#fff544",
+        "button_hover_color": "#000000",
+        "button_text_transform": "uppercase"
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -278,23 +301,6 @@
         "color_scheme": "scheme-1",
         "padding-block-start": 48,
         "padding-block-end": 48
-      }
-    },
-    "custom_banner_WHFJ9a": {
-      "type": "custom-banner",
-      "name": "Gift Guide Section",
-      "settings": {
-        "bg_color": "#ffffff",
-        "heading": "The Gift Guide",
-        "heading_color": "#000000",
-        "subtext": "Discover joy: Your ultimate holiday gift destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
-        "subtext_color": "#000000",
-        "button_text": "Shop Now",
-        "button_link": "shopify://collections/all",
-        "button_bg": "#000000",
-        "button_color": "#ffffff",
-        "button_hover_bg": "#333333",
-        "button_hover_color": "#ffffff"
       }
     }
   },

@@ -15,24 +15,26 @@
       </button>
 
       <!-- Logo -->
-      <div class="header-logo-wrap">
-        {% if section.settings.use_text_logo %}
-          <h2
-            class="header-logo"
-            style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
-          >
-            {{ section.settings.logo_text }}
-          </h2>
-        {% elsif section.settings.logo_image != blank %}
-          <img src="{{ section.settings.logo_image | image_url: width: 150 }}" alt="Logo" class="header-logo-img">
-        {% else %}
-          <h2
-            class="header-logo"
-            style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
-          >
-            {{ shop.name }}
-          </h2>
-        {% endif %}
+       <div class="header-logo-wrap">
+        <a href="{{ routes.root_url }}" class="header-logo-link">
+          {% if section.settings.use_text_logo %}
+            <h2
+              class="header-logo"
+              style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
+            >
+              {{ section.settings.logo_text }}
+            </h2>
+          {% elsif section.settings.logo_image != blank %}
+            <img src="{{ section.settings.logo_image | image_url: width: 150 }}" alt="Logo" class="header-logo-img">
+          {% else %}
+            <h2
+              class="header-logo"
+              style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
+            >
+              {{ shop.name }}
+            </h2>
+          {% endif %}
+        </a>
       </div>
 
       <!-- Middle Text -->

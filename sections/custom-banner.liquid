@@ -39,22 +39,21 @@
 
     <!-- Button -->
     {% render 'test-button',
-  button_text: section.settings.button_text,
-  button_link: section.settings.button_link,
-  button_hover_effect: section.settings.button_hover_effect,
-  button_bg: section.settings.button_bg,
-  button_color: section.settings.button_color,
-  button_hover_bg: section.settings.button_hover_bg,
-  button_hover_color: section.settings.button_hover_color,
-  button_text_transform: section.settings.button_text_transform,
-  button_icon: section.settings.button_icon,
-  button_icon_width: section.settings.button_icon_width,
-  button_icon_height: section.settings.button_icon_height,
-  button_icon_fit: section.settings.button_icon_fit,
-  btn_class: 'gift-guide-btn',
-  btn_icon_class: 'gift-guide-btn-icon'
-%}
-
+      button_text: section.settings.button_text,
+      button_link: section.settings.button_link,
+      button_hover_effect: section.settings.button_hover_effect,
+      button_bg: section.settings.button_bg,
+      button_color: section.settings.button_color,
+      button_hover_bg: section.settings.button_hover_bg,
+      button_hover_color: section.settings.button_hover_color,
+      button_text_transform: section.settings.button_text_transform,
+      button_icon: section.settings.button_icon,
+      button_icon_width: section.settings.button_icon_width,
+      button_icon_height: section.settings.button_icon_height,
+      button_icon_fit: section.settings.button_icon_fit,
+      btn_class: 'gift-guide-btn',
+      btn_icon_class: 'gift-guide-btn-icon'
+    %}
   </div>
 
   <!-- Bottom Bar Inside Banner -->
@@ -209,29 +208,95 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
     { "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#000000" },
 
-    { "type": "textarea", "id": "subtext", "label": "Desktop Description Text", "default": "Discover joy: Your ultimate holiday gift destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
-    { "type": "textarea", "id": "subtext_mobile", "label": "Mobile Description Text", "default": "Discover joy on the go! Perfect gifts for every loved one." },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Desktop Description Text",
+      "default": "Discover joy: Your ultimate holiday gift destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext_mobile",
+      "label": "Mobile Description Text",
+      "default": "Discover joy on the go! Perfect gifts for every loved one."
+    },
     { "type": "color", "id": "subtext_color", "label": "Description Color", "default": "#000000" },
 
     { "type": "text", "id": "button_text", "label": "Button Text", "default": "Shop Now" },
     { "type": "url", "id": "button_link", "label": "Button Link", "default": "/collections/all" },
 
     { "type": "image_picker", "id": "button_icon", "label": "Button Icon (SVG, PNG, JPG)" },
-    { "type": "range", "id": "button_icon_width", "label": "Button Icon Width (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
-    { "type": "range", "id": "button_icon_height", "label": "Button Icon Height (px)", "min": 10, "max": 100, "step": 1, "default": 20 },
-    { "type": "select", "id": "button_icon_fit", "label": "Button Icon Fit", "options": [ { "value": "contain", "label": "Contain" }, { "value": "cover", "label": "Cover" } ], "default": "contain" },
+    {
+      "type": "range",
+      "id": "button_icon_width",
+      "label": "Button Icon Width (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_icon_height",
+      "label": "Button Icon Height (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "button_icon_fit",
+      "label": "Button Icon Fit",
+      "options": [
+        { "value": "contain", "label": "Contain" },
+        { "value": "cover", "label": "Cover" }
+      ],
+      "default": "contain"
+    },
 
-    { "type": "select", "id": "button_hover_effect", "label": "Button Hover Effect", "options": [ { "value": "hover-bg", "label": "Background Change Only" }, { "value": "hover-scale", "label": "Scale Only" }, { "value": "hover-both", "label": "Background + Scale" } ], "default": "hover-both" },
+    {
+      "type": "select",
+      "id": "button_hover_effect",
+      "label": "Button Hover Effect",
+      "options": [
+        { "value": "hover-bg", "label": "Background Change Only" },
+        { "value": "hover-scale", "label": "Scale Only" },
+        { "value": "hover-both", "label": "Background + Scale" }
+      ],
+      "default": "hover-both"
+    },
 
     { "type": "color", "id": "button_bg", "label": "Button Background", "default": "#000000" },
     { "type": "color", "id": "button_color", "label": "Button Text Color", "default": "#ffffff" },
     { "type": "color", "id": "button_hover_bg", "label": "Button Hover Background", "default": "#333333" },
     { "type": "color", "id": "button_hover_color", "label": "Button Hover Text Color", "default": "#ffffff" },
 
-    { "type": "select", "id": "button_text_transform", "label": "Button Text Transform", "options": [ { "value": "none", "label": "None" }, { "value": "uppercase", "label": "Uppercase" }, { "value": "capitalize", "label": "Capitalize" }, { "value": "lowercase", "label": "Lowercase" } ], "default": "uppercase" },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
 
-    { "type": "text", "id": "bottom_text", "label": "Bottom Bar Desktop Text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
-    { "type": "text", "id": "bottom_text_mobile", "label": "Bottom Bar Mobile Text", "default": "Ethically made clothes XXS-6XL" },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom Bar Desktop Text",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text_mobile",
+      "label": "Bottom Bar Mobile Text",
+      "default": "Ethically made clothes XXS-6XL"
+    },
     { "type": "color", "id": "bottom_bar_bg", "label": "Bottom Bar Background", "default": "#f5f5f5" },
     { "type": "color", "id": "bottom_bar_text_color", "label": "Bottom Bar Text Color", "default": "#000000" }
   ],

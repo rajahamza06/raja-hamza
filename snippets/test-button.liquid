@@ -16,7 +16,7 @@
     {{ button_text }}
 
     {% if button_icon != blank %}
-      {% assign icon_ext = button_icon | split: '.' | last %}
+      {% assign icon_ext = button_icon | split: '.' | last | downcase %}
       {% if icon_ext == 'svg' %}
         <span class="{{ btn_icon_class }}">
           {{ button_icon | file_url | inline_svg }}

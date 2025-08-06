@@ -242,16 +242,16 @@
         "heading_color": "#000000",
         "button_text": "ADD TO CART",
         "button_link": "",
-        "button_bg": "#000000",
-        "button_color": "#ffffff",
-        "button_hover_bg": "#fff544",
-        "button_hover_color": "#000000",
-        "button_text_transform": "uppercase",
         "button_icon": "shopify://shop_images/Line_15.svg",
         "button_icon_width": 20,
         "button_icon_height": 20,
         "button_icon_fit": "contain",
-        "button_hover_effect": "hover-effect-2"
+        "button_hover_effect": "hover-bg",
+        "button_bg": "#000000",
+        "button_color": "#ffffff",
+        "button_hover_bg": "#fff544",
+        "button_hover_color": "#000000",
+        "button_text_transform": "uppercase"
       }
     }
   },

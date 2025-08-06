@@ -237,7 +237,7 @@
   async function openQuickView(handle) {
     const popup = document.getElementById('quick-view-popup');
     popup.classList.add('active');
-
+console.log(handle);
     const res = await fetch(`/products/${handle}.js`);
     const product = await res.json();
     currentProduct = product;

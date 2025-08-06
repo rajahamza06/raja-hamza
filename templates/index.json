@@ -212,6 +212,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "collection": "all",
@@ -237,7 +238,9 @@
       "type": "product-grid-quickview",
       "name": "Product Grid with Quick View",
       "settings": {
-        "collection": "quickview"
+        "collection": "quickview",
+        "heading": "Tisso vison in the wild",
+        "heading_color": "#000000"
       }
     }
   },

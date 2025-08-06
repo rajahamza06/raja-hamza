@@ -31,19 +31,21 @@
           <h3 id="popup-title" class="popup-title">{{ product.title }}</h3>
           <p id="popup-price" class="popup-price">{{ product.price | money }}</p>
           <p id="popup-description" class="popup-desc">{{ product.description }}</p>
-         {% assign size_option = product.options_by_name['Size'] %}
-{% if size_option %}
-  <div id="popup-sizes">
-    {% for value in size_option.values %}
+
+          {% assign color_option = product.options_by_name['Color'] %}
+{% if color_option %}
+  <div id="popup-colors">
+    {% for value in color_option.values %}
       <div>{{ value }}</div>
     {% endfor %}
   </div>
 {% endif %}
 
-{% assign color_option = product.options_by_name['Color'] %}
-{% if color_option %}
-  <div id="popup-colors">
-    {% for value in color_option.values %}
+
+         {% assign size_option = product.options_by_name['Size'] %}
+{% if size_option %}
+  <div id="popup-sizes">
+    {% for value in size_option.values %}
       <div>{{ value }}</div>
     {% endfor %}
   </div>

@@ -216,10 +216,7 @@
       }
 {% endstyle %}
 
-{% comment %} <script>
-  let currentProduct = null;
-  let selectedOptions = [];
-  let selectedVariantId = null;
+<script>
 
   // Open Quick View
   async function openQuickView(handle) {
@@ -230,67 +227,12 @@
     const product = await res.json();
     currentProduct = product;
     selectedOptions = new Array(product.options.length).fill(null);
-
-    // Fill popup
-    document.getElementById('popup-image').src = product.images[0];
-    document.getElementById('popup-title').innerText = product.title;
-    document.getElementById('popup-price').innerText = (product.price / 100).toFixed(2) + ' {{ shop.currency }}';
-    document.getElementById('popup-description').innerText = product.description;
-
-    // Render variant selects
-    const variantsContainer = document.getElementById('popup-variants');
-    variantsContainer.innerHTML = '';
-    product.options.forEach((option, index) => {
-      const label = document.createElement('label');
-      label.textContent = option;
-      const select = document.createElement('select');
-      select.dataset.index = index;
-      select.innerHTML = `<option disabled selected>Choose ${option}</option>`;
-      const values = [...new Set(product.variants.map((v) => v.options[index]))];
-      values.forEach((value) => {
-        select.innerHTML += `<option value="${value}">${value}</option>`;
-      });
-      select.addEventListener('change', (e) => {
-        selectedOptions[index] = e.target.value;
-        updateVariant();
-      });
-      variantsContainer.appendChild(label);
-      variantsContainer.appendChild(select);
-    });
-
-    // Default single variant
-    if (product.variants.length === 1) {
-      selectedVariantId = product.variants[0].id;
-    }
-  }
-
-  function updateVariant() {
-    const match = currentProduct.variants.find((v) =>
-      v.options.every((opt, idx) => !selectedOptions[idx] || opt === selectedOptions[idx])
-    );
-    if (match) selectedVariantId = match.id;
   }
 
   function closeQuickView() {
     document.getElementById('quick-view-popup').classList.remove('active');
   }
-
-  // Add to cart
-  document.getElementById('add-to-cart-btn').addEventListener('click', async () => {
-    if (!selectedVariantId) {
-      alert('Please select all options');
-      return;
-    }
-
-    await fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: selectedVariantId, quantity: 1 }),
-    });
-
-    window.location.href = '/cart';
-  });
-</script> {% endcomment %}
+</script>
 
 {% schema %}
 {

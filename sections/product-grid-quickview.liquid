@@ -1,5 +1,5 @@
 <section class="product-grid-quickview">
-  <div class="product-grid-container">
+  <div class="product-quickview-container">
     {% if section.settings.heading != blank %}
       <h2 class="product-grid-heading" style="color: {{ section.settings.heading_color }};">
         {{ section.settings.heading }}
@@ -46,8 +46,7 @@
 </section>
 
 <style>
-  /* Product Grid */
-  .product-grid-container {
+  .product-quickview-container {
      width: 100%;
       max-width: 1330px;
       margin: 0 auto;

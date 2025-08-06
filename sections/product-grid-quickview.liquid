@@ -14,12 +14,8 @@
             class="product-card-img"
           >
           <button class="quick-view-btn" onclick="openQuickView('{{ product.handle }}')">+</button>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
 
-  <!-- Quick View Popup -->
+          <!-- Quick View Popup -->
   <div id="quick-view-popup" class="quick-view-popup">
     <div class="quick-view-content">
       <span class="close-btn" onclick="closeQuickView()">&times;</span>
@@ -70,6 +66,10 @@
           {% endif %}
         </div>
       </div>
+    </div>
+  </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 </section>

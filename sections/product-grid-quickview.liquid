@@ -32,12 +32,14 @@
 
         <!-- Right Details -->
         <div class="popup-details">
-          <h3 id="popup-title" class="popup-title"></h3>
-          <p id="popup-price" class="popup-price"></p>
-          <p id="popup-description" class="popup-desc"></p>
-
-          <div id="popup-variants"></div>
-
+          <h3 id="popup-title" class="popup-title">{{ product.title }}</h3>
+          <p id="popup-price" class="popup-price">{{ product.price | money }}</p>
+          <p id="popup-description" class="popup-desc">{{ product.description }}</p>
+          {% for variant in product.variants %}
+            <div id="popup-variants">
+              {{ variant.title }}
+            </div>
+          {% endfor %}
           {% if section.settings.button_text != blank %}
             <a
               href="{{ section.settings.button_link }}"

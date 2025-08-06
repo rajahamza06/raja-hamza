@@ -16,74 +16,72 @@
           <button class="quick-view-btn" onclick="openQuickView('{{ product.handle }}')">+</button>
 
           <!-- Quick View Popup -->
-  <div id="quick-view-popup" class="quick-view-popup">
-    <div class="quick-view-content">
-      <span class="close-btn" onclick="closeQuickView()">&times;</span>
+          <div id="quick-view-popup" class="quick-view-popup">
+            <div class="quick-view-content">
+              <span class="close-btn" onclick="closeQuickView()">&times;</span>
 
-      <div class="popup-inner">
-        <!-- Left Image -->
-        <div class="popup-image-wrap">
-          <img id="popup-image" src="" alt="">
-        </div>
+              <div class="popup-inner">
+                <!-- Left Image -->
+                <div class="popup-image-wrap">
+                  <img id="popup-image" src="" alt="">
+                </div>
 
-        <!-- Right Details -->
-        <div class="popup-details">
-          <h3 id="popup-title" class="popup-title">{{ product.title }}</h3>
-          <p id="popup-price" class="popup-price">{{ product.price | money }}</p>
-          <p id="popup-description" class="popup-desc">{{ product.description }}</p>
+                <!-- Right Details -->
+                <div class="popup-details">
+                  <h3 id="popup-title" class="popup-title">{{ product.title }}</h3>
+                  <p id="popup-price" class="popup-price">{{ product.price | money }}</p>
+                  <p id="popup-description" class="popup-desc">{{ product.description }}</p>
 
-          {% assign color_option = product.options_by_name['Color'] %}
-{% if color_option %}
-  <div id="popup-colors">
-    {% for value in color_option.values %}
-      <div>{{ value }}</div>
-    {% endfor %}
-  </div>
-{% endif %}
+                  {% assign color_option = product.options_by_name.Color %}
+                  {% if color_option %}
+                    <div id="popup-colors">
+                      {% for value in color_option.values %}
+                        <div>{{ value }}</div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
 
+                  {% assign size_option = product.options_by_name.Size %}
+                  {% if size_option %}
+                    <div id="popup-sizes">
+                      {% for value in size_option.values %}
+                        <div>{{ value }}</div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
 
-         {% assign size_option = product.options_by_name['Size'] %}
-{% if size_option %}
-  <div id="popup-sizes">
-    {% for value in size_option.values %}
-      <div>{{ value }}</div>
-    {% endfor %}
-  </div>
-{% endif %}
-
-
-          {% if section.settings.button_text != blank %}
-            <a
-              href="{{ section.settings.button_link }}"
-              id="add-to-cart-btn"
-              class="popup-add-btn {{ section.settings.button_hover_effect }}"
-              style="
-                --btn-bg: {{ section.settings.button_bg }};
-                --btn-color: {{ section.settings.button_color }};
-                --btn-hover-bg: {{ section.settings.button_hover_bg }};
-                --btn-hover-color: {{ section.settings.button_hover_color }};
-                text-transform: {{ section.settings.button_text_transform }};
-              "
-            >
-              {{ section.settings.button_text }}
-              {% if section.settings.button_icon != blank %}
-                <img
-                  src="{{ section.settings.button_icon | image_url }}"
-                  alt=""
-                  class="popup-add-btn-icon"
-                  style="
-                    width: {{ section.settings.button_icon_width }}px;
-                    height: {{ section.settings.button_icon_height }}px;
-                    object-fit: {{ section.settings.button_icon_fit }};
-                  "
-                >
-              {% endif %}
-            </a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
+                  {% if section.settings.button_text != blank %}
+                    <a
+                      href="{{ section.settings.button_link }}"
+                      id="add-to-cart-btn"
+                      class="popup-add-btn {{ section.settings.button_hover_effect }}"
+                      style="
+                        --btn-bg: {{ section.settings.button_bg }};
+                        --btn-color: {{ section.settings.button_color }};
+                        --btn-hover-bg: {{ section.settings.button_hover_bg }};
+                        --btn-hover-color: {{ section.settings.button_hover_color }};
+                        text-transform: {{ section.settings.button_text_transform }};
+                      "
+                    >
+                      {{ section.settings.button_text }}
+                      {% if section.settings.button_icon != blank %}
+                        <img
+                          src="{{ section.settings.button_icon | image_url }}"
+                          alt=""
+                          class="popup-add-btn-icon"
+                          style="
+                            width: {{ section.settings.button_icon_width }}px;
+                            height: {{ section.settings.button_icon_height }}px;
+                            object-fit: {{ section.settings.button_icon_fit }};
+                          "
+                        >
+                      {% endif %}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       {% endfor %}
     </div>
@@ -235,7 +233,6 @@
 {% endstyle %}
 
 <script>
-
   // Open Quick View
   async function openQuickView(handle) {
     const popup = document.getElementById('quick-view-popup');

@@ -1,0 +1,38 @@
+{%- assign btn_class = btn_class | default: '' -%}
+{%- assign btn_icon_class = btn_icon_class | default: '' -%}
+
+{% if button_text != blank %}
+  <a
+    href="{{ button_link }}"
+    class="{{ btn_class }} {{ button_hover_effect }}"
+    style="
+      --btn-bg: {{ button_bg }};
+      --btn-color: {{ button_color }};
+      --btn-hover-bg: {{ button_hover_bg }};
+      --btn-hover-color: {{ button_hover_color }};
+      text-transform: {{ button_text_transform }};
+    "
+  >
+    {{ button_text }}
+
+    {% if button_icon != blank %}
+      {% assign icon_ext = button_icon | split: '.' | last %}
+      {% if icon_ext == 'svg' %}
+        <span class="{{ btn_icon_class }}">
+          {{ button_icon | file_url | inline_svg }}
+        </span>
+      {% else %}
+        <img
+          src="{{ button_icon | image_url }}"
+          alt=""
+          class="{{ btn_icon_class }}"
+          style="
+            width: {{ button_icon_width }}px;
+            height: {{ button_icon_height }}px;
+            object-fit: {{ button_icon_fit }};
+          "
+        >
+      {% endif %}
+    {% endif %}
+  </a>
+{% endif %}

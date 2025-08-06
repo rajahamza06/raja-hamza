@@ -41,7 +41,8 @@
           {% if section.settings.button_text != blank %}
             <a
               href="{{ section.settings.button_link }}"
-              class="popup-add-btn {{ section.settings.button_hover_effect }}"
+              id="add-to-cart-btn"
+              class="gpopup-add-btn {{ section.settings.button_hover_effect }}"
               style="
                 --btn-bg: {{ section.settings.button_bg }};
                 --btn-color: {{ section.settings.button_color }};
@@ -49,7 +50,6 @@
                 --btn-hover-color: {{ section.settings.button_hover_color }};
                 text-transform: {{ section.settings.button_text_transform }};
               "
-              id="add-to-cart-btn"
             >
               {{ section.settings.button_text }}
               {% if section.settings.button_icon != blank %}

@@ -6,129 +6,120 @@
       </h2>
     {% endif %}
     <div class="product-grid-inner">
-      {% for product in collections[section.settings.collection].products %}
-        <div class="product-grid-card">
-          <img
-            src="{{ product.featured_image | image_url: width: 600 }}"
-            alt="{{ product.title }}"
-            class="product-card-img"
-          >
+     {% for product in collections[section.settings.collection].products %}
+  <div class="product-grid-card">
+    <img
+      src="{{ product.featured_image | image_url: width: 600 }}"
+      alt="{{ product.title }}"
+      class="product-card-img"
+    >
 
-          <button
-            class="quick-view-btn"
-            onclick="openQuickView('quick-view-{{ product.handle }}')"
-          >
-            +
-          </button>
+    <button
+      class="quick-view-btn"
+      onclick="openQuickView('quick-view-{{ product.handle }}')"
+    >
+      +
+    </button>
 
-          <!-- Unique Quick View Popup -->
-          <div id="quick-view-{{ product.handle }}" class="quick-view-popup">
-            <div class="quick-view-content">
-              <span class="close-btn" onclick="closeQuickView('quick-view-{{ product.handle }}')">&times;</span>
+    <!-- Unique Quick View Popup -->
+    <div id="quick-view-{{ product.handle }}" class="quick-view-popup">
+      <div class="quick-view-content">
+        <span class="close-btn" onclick="closeQuickView('quick-view-{{ product.handle }}')">&times;</span>
 
-              <div class="popup-inner">
-                <!-- Left Image -->
-                <div class="popup-image-wrap">
-                  <img
-                    src="{{ product.featured_image | image_url }}"
-                    alt="{{ product.title }}"
-                  >
-                </div>
+        <div class="popup-inner">
+          <!-- Left Image -->
+          <div class="popup-image-wrap">
+            <img
+              src="{{ product.featured_image | image_url }}"
+              alt="{{ product.title }}"
+            >
+          </div>
 
-                <!-- Right Details -->
-                <div class="popup-details">
-                  <h3 class="popup-title">{{ product.title }}</h3>
-                  <p class="popup-price">{{ product.price | money }}</p>
-                  <p class="popup-desc">{{ product.description }}</p>
+          <!-- Right Details -->
+          <div class="popup-details">
+            <h3 class="popup-title">{{ product.title }}</h3>
+            <p class="popup-price">{{ product.price | money }}</p>
+            <p class="popup-desc">{{ product.description }}</p>
 
-                  {% assign color_option = product.options_by_name.Color %}
-                  {% if color_option %}
-                    <div class="popup-colors" data-option-index="0">
-                      {% for value in color_option.values %}
-                        <button
-                          type="button"
-                          class="color-option"
-                          data-option-value="{{ value }}"
-                          onclick="selectOption(this, '{{ product.handle }}', 0, '{{ value }}')"
-                        >
-                          {{ value }}
-                        </button>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-
-                  {% assign size_option = product.options_by_name.Size %}
-                  {% if size_option %}
-                    <div class="popup-sizes">
-                      {% for value in size_option.values %}
-                        <div>{{ value }}</div>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-
-                  {%- assign variant_to_use = product.selected_or_first_available_variant
-                    | default: product.variants.first
-                  -%}
-                  {%- assign product_form_id = 'product-form-' | append: product.id -%}
-
-                  {% if variant_to_use %}
-                    <!-- Shopify Product Form with Custom Button -->
-                    {%- form 'product',
-                      product,
-                      id: product_form_id,
-                      novalidate: 'novalidate',
-                      data-type: 'add-to-cart-form'
-                    -%}
-                      <input
-                        type="hidden"
-                        name="id"
-                        id="variant-id-{{ product.handle }}"
-                        value=""
-                        required
-                      >
-                      <input
-                        type="hidden"
-                        name="quantity"
-                        value="{% if variant_to_use.quantity_rule.min %}{{ variant_to_use.quantity_rule.min }}{% else %}1{% endif %}"
-                      >
-
-                      {% if section.settings.button_text != blank %}
-                        <button
-                          type="submit"
-                          class="popup-add-btn {{ section.settings.button_hover_effect }}"
-                          style="
-                            --btn-bg: {{ section.settings.button_bg }};
-                            --btn-color: {{ section.settings.button_color }};
-                            --btn-hover-bg: {{ section.settings.button_hover_bg }};
-                            --btn-hover-color: {{ section.settings.button_hover_color }};
-                            text-transform: {{ section.settings.button_text_transform }};
-                          "
-                        >
-                          {{ section.settings.button_text }}
-                          {% if section.settings.button_icon != blank %}
-                            <img
-                              src="{{ section.settings.button_icon | image_url }}"
-                              alt=""
-                              class="popup-add-btn-icon"
-                              style="
-                                width: {{ section.settings.button_icon_width }}px;
-                                height: {{ section.settings.button_icon_height }}px;
-                                object-fit: {{ section.settings.button_icon_fit }};
-                              "
-                            >
-                          {% endif %}
-                        </button>
-                      {% endif %}
-                    {%- endform -%}
-                  {% else %}
-                    <p class="out-of-stock-msg">This product is currently unavailable.</p>
-                  {% endif %}
-                </div>
+            {% assign color_option = product.options_by_name.Color %}
+            {% if color_option %}
+              <div class="popup-colors">
+                {% for value in color_option.values %}
+                  <div>{{ value }}</div>
+                {% endfor %}
               </div>
-            </div>
+            {% endif %}
+
+            {% assign size_option = product.options_by_name.Size %}
+            {% if size_option %}
+              <div class="popup-sizes">
+                {% for value in size_option.values %}
+                  <div>{{ value }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {%- assign variant_to_use = product.selected_or_first_available_variant | default: product.variants.first -%}
+            {%- assign product_form_id = 'product-form-' | append: product.id -%}
+
+            {% if variant_to_use %}
+              <!-- Shopify Product Form with Custom Button -->
+              {%- form 'product',
+                product,
+                id: product_form_id,
+                novalidate: 'novalidate',
+                data-type: 'add-to-cart-form'
+              -%}
+                <input
+                  type="hidden"
+                  name="id"
+                  value="{{ variant_to_use.id }}"
+                  {% unless variant_to_use.available %}disabled{% endunless %}
+                >
+                <input
+                  type="hidden"
+                  name="quantity"
+                  value="{% if variant_to_use.quantity_rule.min %}{{ variant_to_use.quantity_rule.min }}{% else %}1{% endif %}"
+                >
+
+                {% if section.settings.button_text != blank %}
+                  <button
+                    type="submit"
+                    class="popup-add-btn {{ section.settings.button_hover_effect }}"
+                    style="
+                      --btn-bg: {{ section.settings.button_bg }};
+                      --btn-color: {{ section.settings.button_color }};
+                      --btn-hover-bg: {{ section.settings.button_hover_bg }};
+                      --btn-hover-color: {{ section.settings.button_hover_color }};
+                      text-transform: {{ section.settings.button_text_transform }};
+                    "
+                  >
+                    {{ section.settings.button_text }}
+                    {% if section.settings.button_icon != blank %}
+                      <img
+                        src="{{ section.settings.button_icon | image_url }}"
+                        alt=""
+                        class="popup-add-btn-icon"
+                        style="
+                          width: {{ section.settings.button_icon_width }}px;
+                          height: {{ section.settings.button_icon_height }}px;
+                          object-fit: {{ section.settings.button_icon_fit }};
+                        "
+                      >
+                    {% endif %}
+                  </button>
+                {% endif %}
+              {%- endform -%}
+            {% else %}
+              <p class="out-of-stock-msg">This product is currently unavailable.</p>
+            {% endif %}
           </div>
         </div>
-      {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
     </div>
   </div>
 </section>
@@ -292,7 +283,6 @@
     }
   }
 </script>
-
 
 {% schema %}
 {

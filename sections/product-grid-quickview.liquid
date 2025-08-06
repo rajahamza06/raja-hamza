@@ -238,7 +238,7 @@
     const popup = document.getElementById('quick-view-popup');
     popup.classList.add('active');
     console.log(handle,"abcccccc")
-    const res = await fetch(`/products/${handle}.js`);
+    const res = await fetch(`/products`);
     const product = await res.json();
     currentProduct = product;
     selectedOptions = new Array(product.options.length).fill(null);

@@ -176,12 +176,15 @@
 
   /* Mobile Responsive */
    @media screen and (max-width: 768px) {
+    .gift-guide-text-box {
+      max-width: 100%;}
     .gift-guide-heading { font-size: 30px; margin-bottom: 24px; }
     .gift-guide-subtext { font-size: 16px; }
     .mobile-only { display: block; }
+     .desktop-only { display: none; }
 
     }
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 420px) {
     .gift-guide-section {
       background: var(--mobile-bg) no-repeat center;
       padding-block: 110px 70px;
@@ -200,12 +203,9 @@
     .gift-guide-text-box {
       text-align: center;
       margin-bottom: 0;
-      max-width: 100%;
     }
 
-    .gift-guide-btn { margin: 0 auto; justify-content: center; }
-
-    .desktop-only { display: none; }
+    .gift-guide-btn { margin: 0 auto; justify-content: center; }   
 
     .bottom-bar-text { font-size: 12px; }
   }

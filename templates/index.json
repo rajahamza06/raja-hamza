@@ -251,7 +251,7 @@
         "button_icon_width": 20,
         "button_icon_height": 20,
         "button_icon_fit": "contain",
-        "button_hover_effect": ""
+        "button_hover_effect": "hover-effect-2"
       }
     }
   },

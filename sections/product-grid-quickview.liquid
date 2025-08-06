@@ -59,33 +59,53 @@
                     </div>
                   {% endif %}
 
-                  {% if section.settings.button_text != blank %}
-                    <a
-                      href="{{ section.settings.button_link }}"
-                      class="popup-add-btn {{ section.settings.button_hover_effect }}"
+                  <!-- Shopify Product Form with Custom Button -->
+            {%- form 'product',
+              product,
+              id: product_form_id,
+              novalidate: 'novalidate',
+              data-type: 'add-to-cart-form'
+            -%}
+              <input
+                type="hidden"
+                name="id"
+                value="{{ variant_to_use.id }}"
+                {% unless variant_to_use.available %}disabled{% endunless %}
+              >
+              <input
+                type="hidden"
+                name="quantity"
+                value="{% if variant_to_use.quantity_rule.min %}{{ variant_to_use.quantity_rule.min }}{% else %}1{% endif %}"
+              >
+
+              {% if section.settings.button_text != blank %}
+                <button
+                  type="submit"
+                  class="popup-add-btn {{ section.settings.button_hover_effect }}"
+                  style="
+                    --btn-bg: {{ section.settings.button_bg }};
+                    --btn-color: {{ section.settings.button_color }};
+                    --btn-hover-bg: {{ section.settings.button_hover_bg }};
+                    --btn-hover-color: {{ section.settings.button_hover_color }};
+                    text-transform: {{ section.settings.button_text_transform }};
+                  "
+                >
+                  {{ section.settings.button_text }}
+                  {% if section.settings.button_icon != blank %}
+                    <img
+                      src="{{ section.settings.button_icon | image_url }}"
+                      alt=""
+                      class="popup-add-btn-icon"
                       style="
-                        --btn-bg: {{ section.settings.button_bg }};
-                        --btn-color: {{ section.settings.button_color }};
-                        --btn-hover-bg: {{ section.settings.button_hover_bg }};
-                        --btn-hover-color: {{ section.settings.button_hover_color }};
-                        text-transform: {{ section.settings.button_text_transform }};
+                        width: {{ section.settings.button_icon_width }}px;
+                        height: {{ section.settings.button_icon_height }}px;
+                        object-fit: {{ section.settings.button_icon_fit }};
                       "
                     >
-                      {{ section.settings.button_text }}
-                      {% if section.settings.button_icon != blank %}
-                        <img
-                          src="{{ section.settings.button_icon | image_url }}"
-                          alt=""
-                          class="popup-add-btn-icon"
-                          style="
-                            width: {{ section.settings.button_icon_width }}px;
-                            height: {{ section.settings.button_icon_height }}px;
-                            object-fit: {{ section.settings.button_icon_fit }};
-                          "
-                        >
-                      {% endif %}
-                    </a>
                   {% endif %}
+                </button>
+              {% endif %}
+            {%- endform -%}
                 </div>
               </div>
             </div>
@@ -255,7 +275,6 @@
     }
   }
 </script>
-
 
 {% schema %}
 {

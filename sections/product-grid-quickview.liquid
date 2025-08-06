@@ -7,7 +7,7 @@
     {% endif %}
     <div class="product-grid-inner">
       {% for product in collections[section.settings.collection].products %}
-        <div class="product-card">
+        <div class="product-grid-card">
           <img
             src="{{ product.featured_image | image_url: width: 600 }}"
             alt="{{ product.title }}"

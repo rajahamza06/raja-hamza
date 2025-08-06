@@ -85,7 +85,7 @@
     }
     .product-grid-inner{
         display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(433px, 1fr));
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 20px;
     }
     .product-grid-heading{
@@ -97,7 +97,7 @@
        margin-bottom:30px;
     }
     .product-grid-card{ position: relative; overflow: hidden; }
-    .product-card-img { width: 100%; display: block; }
+    .product-card-img { width: 100%; display: block;height:100%;aspect-ratio:1/1;object-fit:cover;}
     .quick-view-btn {
       position: absolute; top: 10px; right: 10px;
       background: #000; color: #fff;

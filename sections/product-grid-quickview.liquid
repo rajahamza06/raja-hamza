@@ -46,82 +46,90 @@
 </section>
 
 <style>
-  /* Product Grid */
-  .product-grid-container {
-     width: 100%;
-      max-width: 1330px;
-      margin: 0 auto;
-      padding-inline: 15px;
-  }
-  .product-grid-inner{
-      display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(433px, 1fr));
-    gap: 20px;
-  }
-  .product-card { position: relative; overflow: hidden; }
-  .product-card-img { width: 100%; display: block; }
-  .quick-view-btn {
-    position: absolute; top: 10px; right: 10px;
-    background: #000; color: #fff;
-    border: none; border-radius: 50%;
-    width: 30px; height: 30px;
-    font-size: 18px; line-height: 30px;
-    cursor: pointer; transition: 0.3s;
-  }
-  .quick-view-btn:hover { background: #333; }
+    /* Product Grid */
+    .product-grid-container {
+       width: 100%;
+        max-width: 1330px;
+        margin: 0 auto;
+        padding-inline: 15px;
+    }
+    .product-grid-inner{
+        display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(433px, 1fr));
+      gap: 20px;
+    }
+    product-grid-heading{
+      font-family: Lustria;
+      font-weight: 400;
+      font-style: Regular;
+      font-size: 36px;
+     leading-trim: NONE;
+     line-height: 1.2;
+    }
+    .product-card { position: relative; overflow: hidden; }
+    .product-card-img { width: 100%; display: block; }
+    .quick-view-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #000; color: #fff;
+      border: none; border-radius: 50%;
+      width: 30px; height: 30px;
+      font-size: 18px; line-height: 30px;
+      cursor: pointer; transition: 0.3s;
+    }
+    .quick-view-btn:hover { background: #333; }
 
-  /* Popup Overlay */
-  .quick-view-popup {
-    display: none;
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    z-index: 9999;
-    justify-content: center; align-items: center;
-  }
-  .quick-view-popup.active { display: flex; }
+    /* Popup Overlay */
+    .quick-view-popup {
+      display: none;
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      justify-content: center; align-items: center;
+    }
+    .quick-view-popup.active { display: flex; }
 
-  .quick-view-content {
-    background: #fff;
-    padding: 20px;
-    width: 350px; max-width: 90%;
-    position: relative;
-    animation: popupFade 0.3s ease;
-  }
-  @keyframes popupFade {
-    from { opacity:0; transform: scale(0.95); }
-    to { opacity:1; transform: scale(1); }
-  }
-  .close-btn {
-    position: absolute; top: 12px; right: 12px;
-    font-size: 22px; cursor: pointer;
-  }
+    .quick-view-content {
+      background: #fff;
+      padding: 20px;
+      width: 350px; max-width: 90%;
+      position: relative;
+      animation: popupFade 0.3s ease;
+    }
+    @keyframes popupFade {
+      from { opacity:0; transform: scale(0.95); }
+      to { opacity:1; transform: scale(1); }
+    }
+    .close-btn {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 22px; cursor: pointer;
+    }
 
-  /* Popup Layout */
-  .popup-inner { display: flex; flex-direction: column; gap: 12px; }
-  .popup-image-wrap img { width: 100%; margin-bottom: 12px; }
-  .popup-title { font-size: 16px; font-weight: 600; margin: 0; }
-  .popup-price { font-weight: 600; font-size: 16px; margin: 0; }
-  .popup-desc { font-size: 13px; line-height: 1.4; color: #333; margin-bottom: 12px; }
+    /* Popup Layout */
+    .popup-inner { display: flex; flex-direction: column; gap: 12px; }
+    .popup-image-wrap img { width: 100%; margin-bottom: 12px; }
+    .popup-title { font-size: 16px; font-weight: 600; margin: 0; }
+    .popup-price { font-weight: 600; font-size: 16px; margin: 0; }
+    .popup-desc { font-size: 13px; line-height: 1.4; color: #333; margin-bottom: 12px; }
 
-  /* Variant Section */
-  #popup-variants { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
-  #popup-variants label { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-  #popup-variants select {
-    padding: 8px; border: 1px solid #000;
-    font-size: 13px; width: 100%;
-  }
+    /* Variant Section */
+    #popup-variants { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+    #popup-variants label { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+    #popup-variants select {
+      padding: 8px; border: 1px solid #000;
+      font-size: 13px; width: 100%;
+    }
 
-  /* Add to Cart Button */
-  .popup-add-btn {
-    margin-top: 10px; padding: 12px; width: 100%;
-    background: #000; color: #fff;
-    font-weight: bold; font-size: 13px;
-    border: none; cursor: pointer;
-    transition: 0.3s;
-    text-transform: uppercase;
-  }
-  .popup-add-btn:hover { background: #333; }
+    /* Add to Cart Button */
+    .popup-add-btn {
+      margin-top: 10px; padding: 12px; width: 100%;
+      background: #000; color: #fff;
+      font-weight: bold; font-size: 13px;
+      border: none; cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+    }
+    .popup-add-btn:hover { background: #333; }
 </style>
 
 <script>
@@ -203,9 +211,11 @@
 {% schema %}
 {
   "name": "Product Quick View",
-  "settings": [{ "type": "collection", "id": "collection", "label": "Choose Collection" },
-  { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
-  { "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#000000" },],
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Choose Collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
+    { "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#000000" }
+  ],
   "presets": [{ "name": "Tisso vison in the wild" }]
 }
 {% endschema %}

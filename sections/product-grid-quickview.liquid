@@ -1,36 +1,76 @@
-<!-- Quick View Popup -->
-<div id="quick-view-popup" class="quick-view-popup">
-  <div class="quick-view-content">
-    <span class="close-btn" onclick="closeQuickView()">&times;</span>
-    <div class="popup-inner">
-      <!-- Left: Product Image -->
-      <div class="popup-image-wrap">
-        <img id="popup-image" src="" alt="">
+<section class="product-grid-quickview">
+  <div class="product-grid-container">
+    {% for product in collections[section.settings.collection].products %}
+      <div class="product-card">
+        <img 
+          src="{{ product.featured_image | image_url: width: 600 }}" 
+          alt="{{ product.title }}" 
+          class="product-card-img"
+        >
+        <button class="quick-view-btn" onclick="openQuickView('{{ product.handle }}')">
+          +
+        </button>
       </div>
+    {% endfor %}
+  </div>
 
-      <!-- Right: Product Details -->
-      <div class="popup-details">
-        <h3 id="popup-title"></h3>
-        <p id="popup-price" class="popup-price"></p>
-        <p id="popup-description" class="popup-desc"></p>
+  <!-- Quick View Popup -->
+  <div id="quick-view-popup" class="quick-view-popup">
+    <div class="quick-view-content">
+      <span class="close-btn" onclick="closeQuickView()">&times;</span>
+      <div class="popup-inner">
+        <img id="popup-image" src="" alt="">
+        <div class="popup-details">
+          <h3 id="popup-title"></h3>
+          <p id="popup-price"></p>
+          <p id="popup-description"></p>
 
-        <!-- Variant: Color as buttons -->
-        <div id="popup-color-wrap" class="variant-wrap"></div>
+          <div id="popup-variants"></div>
 
-        <!-- Variant: Size as dropdown -->
-        <select id="popup-size-wrap" class="variant-dropdown">
-          <option disabled selected>Choose your size</option>
-        </select>
-
-        <!-- Add to Cart Button -->
-        <button id="add-to-cart-btn" class="popup-add-btn">ADD TO CART →</button>
+          <button id="add-to-cart-btn">ADD TO CART →</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <style>
-/* Popup Overlay */
+/* Grid */
+.product-grid-quickview {
+  padding: 40px 20px;
+}
+.product-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+.product-card {
+  position: relative;
+  overflow: hidden;
+}
+.product-card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.quick-view-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  line-height: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.quick-view-btn:hover { background: #333; }
+
+/* Popup */
 .quick-view-popup {
   display: none;
   position: fixed;
@@ -42,12 +82,10 @@
   align-items: center;
 }
 .quick-view-popup.active { display: flex; }
-
-/* Popup Content */
 .quick-view-content {
   background: #fff;
   padding: 20px;
-  width: 500px;
+  width: 400px;
   max-width: 90%;
   position: relative;
   animation: popupFade 0.3s ease;
@@ -56,75 +94,130 @@
   from { opacity:0; transform: scale(0.9); }
   to { opacity:1; transform: scale(1); }
 }
-
-/* Close Button */
 .close-btn {
   position: absolute;
-  top: 10px; right: 15px;
+  top: 10px; right: 10px;
   font-size: 24px;
   cursor: pointer;
 }
-
-/* Popup Layout */
-.popup-inner {
-  display: flex;
-  gap: 15px;
+.popup-inner { display: flex; flex-direction: column; gap: 15px; }
+.popup-inner img { width: 100%; height: auto; }
+.popup-details h3 { margin: 0; font-size: 20px; }
+.popup-details p { margin: 5px 0; }
+#popup-variants { margin: 15px 0; }
+#popup-variants select {
+  width: 100%; margin-bottom: 10px; padding: 8px;
+  border: 1px solid #ddd;
 }
-.popup-image-wrap {
-  flex: 0 0 120px;
-}
-.popup-image-wrap img {
-  width: 100%;
-  display: block;
-}
-.popup-details {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.popup-price { font-weight: bold; }
-.popup-desc { font-size: 14px; color: #444; }
-
-/* Color Options */
-.variant-wrap {
-  display: flex;
-  gap: 5px;
-  margin-top: 10px;
-}
-.variant-wrap button {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #000;
-  background: #fff;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.variant-wrap button.active,
-.variant-wrap button:hover {
-  background: #000;
-  color: #fff;
-}
-
-/* Size Dropdown */
-.variant-dropdown {
-  margin-top: 10px;
-  padding: 8px;
-  border: 1px solid #000;
-  width: 100%;
-}
-
-/* Add to Cart Button */
-.popup-add-btn {
-  margin-top: 15px;
-  padding: 14px;
-  width: 100%;
-  background: #000;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
+#add-to-cart-btn {
+  width: 100%; padding: 12px;
+  background: #000; color: #fff; border: none;
+  font-weight: bold; cursor: pointer;
   transition: 0.3s;
 }
-.popup-add-btn:hover { background: #333; }
+#add-to-cart-btn:hover { background: #333; }
 </style>
+
+<script>
+let currentProduct = null;
+let selectedVariantId = null;
+
+// Open Quick View
+async function openQuickView(handle) {
+  const popup = document.getElementById('quick-view-popup');
+  popup.classList.add('active');
+
+  const res = await fetch(`/products/${handle}.js`);
+  const product = await res.json();
+  currentProduct = product;
+
+  document.getElementById('popup-image').src = product.images[0];
+  document.getElementById('popup-title').innerText = product.title;
+  document.getElementById('popup-price').innerText = 
+    (product.price / 100).toFixed(2) + ' ' + '{{ shop.currency }}';
+  document.getElementById('popup-description').innerText = product.description;
+
+  // Render variants
+  const variantsContainer = document.getElementById('popup-variants');
+  variantsContainer.innerHTML = '';
+  if(product.variants.length > 1){
+    product.options.forEach((option, index) => {
+      const select = document.createElement('select');
+      select.dataset.index = index;
+      select.innerHTML = `<option disabled selected>Choose ${option.name}</option>`;
+      option.values.forEach(value => {
+        select.innerHTML += `<option value="${value}">${value}</option>`;
+      });
+      select.addEventListener('change', updateVariant);
+      variantsContainer.appendChild(select);
+    });
+  } else {
+    selectedVariantId = product.variants[0].id;
+  }
+}
+
+// Update selected variant
+function updateVariant() {
+  const selects = document.querySelectorAll('#popup-variants select');
+  const chosen = Array.from(selects).map(s => s.value);
+  const match = currentProduct.variants.find(v =>
+    v.options.every((opt, idx) => opt === chosen[idx])
+  );
+  if(match){
+    selectedVariantId = match.id;
+  }
+}
+
+// Close popup
+function closeQuickView() {
+  document.getElementById('quick-view-popup').classList.remove('active');
+}
+
+// Add to cart
+document.getElementById('add-to-cart-btn').addEventListener('click', async () => {
+  if(!selectedVariantId && currentProduct.variants.length > 1){
+    alert('Please select all options');
+    return;
+  }
+
+  await fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: selectedVariantId, quantity: 1 })
+  });
+
+  // Auto-add Soft Winter Jacket if condition met
+  const selectedVariant = currentProduct.variants.find(v => v.id === selectedVariantId);
+  if(selectedVariant && selectedVariant.title.includes('Black') && selectedVariant.title.includes('Medium')){
+    const jacketHandle = 'soft-winter-jacket'; // replace with your handle
+    const res = await fetch(`/products/${jacketHandle}.js`);
+    const jacket = await res.json();
+    await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: jacket.variants[0].id, quantity: 1 })
+    });
+  }
+
+  alert('Product added to cart!');
+  closeQuickView();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Product Quick View",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Choose Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid with Quick View"
+    }
+  ]
+}
+{% endschema %}

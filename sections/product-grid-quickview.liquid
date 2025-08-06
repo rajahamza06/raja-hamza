@@ -38,102 +38,128 @@
 
           <div id="popup-variants"></div>
 
-          <button id="add-to-cart-btn" class="popup-add-btn">ADD TO CART →</button>
+          {% if section.settings.button_text != blank %}
+            <a
+              href="{{ section.settings.button_link }}"
+              class="popup-add-btn gift-guide-btn {{ section.settings.button_hover_effect }}"
+              style="
+                --btn-bg: {{ section.settings.button_bg }};
+                --btn-color: {{ section.settings.button_color }};
+                --btn-hover-bg: {{ section.settings.button_hover_bg }};
+                --btn-hover-color: {{ section.settings.button_hover_color }};
+                text-transform: {{ section.settings.button_text_transform }};
+              "
+              id="add-to-cart-btn"
+            >
+              {{ section.settings.button_text }}
+              {% if section.settings.button_icon != blank %}
+                <img
+                  src="{{ section.settings.button_icon | image_url }}"
+                  alt=""
+                  class="gift-guide-btn-icon"
+                  style="
+                    width: {{ section.settings.button_icon_width }}px;
+                    height: {{ section.settings.button_icon_height }}px;
+                    object-fit: {{ section.settings.button_icon_fit }};
+                  "
+                >
+              {% endif %}
+            </a>
+          {% endif %}
         </div>
       </div>
     </div>
   </div>
 </section>
 
-
 {% style %}
-.product-grid-quickview{
-  padding-block:90px;
+  .product-grid-quickview{
+    padding-block:90px;
 
-}
-  .product-quickview-container {
-     width: 100%;
-      max-width: 1360px;
-      margin: 0 auto;
-      padding-inline: 15px;
   }
-  .product-grid-inner{
-      display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(433px, 1fr));
-    gap: 20px;
-  }
-  .product-grid-heading{
-      font-family: Lustria;
-      font-weight: 400;
-      font-style: Regular;
-      font-size: 36px;
-     line-height: 1.2;
-     margin-bottom:30px;
-  }
-  .product-grid-card{ position: relative; overflow: hidden; }
-  .product-card-img { width: 100%; display: block; }
-  .quick-view-btn {
-    position: absolute; top: 10px; right: 10px;
-    background: #000; color: #fff;
-    border: none; border-radius: 50%;
-    width: 30px; height: 30px;
-    font-size: 18px; line-height: 30px;
-    cursor: pointer; transition: 0.3s;
-  }
-  .quick-view-btn:hover { background: #333; }
+    .product-quickview-container {
+       width: 100%;
+        max-width: 1360px;
+        margin: 0 auto;
+        padding-inline: 15px;
+    }
+    .product-grid-inner{
+        display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(433px, 1fr));
+      gap: 20px;
+    }
+    .product-grid-heading{
+        font-family: Lustria;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 36px;
+       line-height: 1.2;
+       margin-bottom:30px;
+    }
+    .product-grid-card{ position: relative; overflow: hidden; }
+    .product-card-img { width: 100%; display: block; }
+    .quick-view-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #000; color: #fff;
+      border: none; border-radius: 50%;
+      width: 30px; height: 30px;
+      font-size: 18px; line-height: 30px;
+      cursor: pointer; transition: 0.3s;
+    }
+    .quick-view-btn:hover { background: #333; }
 
-  /* Popup Overlay */
-  .quick-view-popup {
-    display: none;
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    z-index: 9999;
-    justify-content: center; align-items: center;
-  }
-  .quick-view-popup.active { display: flex; }
+    /* Popup Overlay */
+    .quick-view-popup {
+      display: none;
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      justify-content: center; align-items: center;
+    }
+    .quick-view-popup.active { display: flex; }
 
-  .quick-view-content {
-    background: #fff;
-    padding: 20px;
-    width: 350px; max-width: 90%;
-    position: relative;
-    animation: popupFade 0.3s ease;
-  }
-  @keyframes popupFade {
-    from { opacity:0; transform: scale(0.95); }
-    to { opacity:1; transform: scale(1); }
-  }
-  .close-btn {
-    position: absolute; top: 12px; right: 12px;
-    font-size: 22px; cursor: pointer;
-  }
+    .quick-view-content {
+      background: #fff;
+      padding: 20px;
+      width: 350px; max-width: 90%;
+      position: relative;
+      animation: popupFade 0.3s ease;
+    }
+    @keyframes popupFade {
+      from { opacity:0; transform: scale(0.95); }
+      to { opacity:1; transform: scale(1); }
+    }
+    .close-btn {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 22px; cursor: pointer;
+    }
 
-  /* Popup Layout */
-  .popup-inner { display: flex; flex-direction: column; gap: 12px; }
-  .popup-image-wrap img { width: 100%; margin-bottom: 12px; }
-  .popup-title { font-size: 16px; font-weight: 600; margin: 0; }
-  .popup-price { font-weight: 600; font-size: 16px; margin: 0; }
-  .popup-desc { font-size: 13px; line-height: 1.4; color: #333; margin-bottom: 12px; }
+    /* Popup Layout */
+    .popup-inner { display: flex; flex-direction: column; gap: 12px; }
+    .popup-image-wrap img { width: 100%; margin-bottom: 12px; }
+    .popup-title { font-size: 16px; font-weight: 600; margin: 0; }
+    .popup-price { font-weight: 600; font-size: 16px; margin: 0; }
+    .popup-desc { font-size: 13px; line-height: 1.4; color: #333; margin-bottom: 12px; }
 
-  /* Variant Section */
-  #popup-variants { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
-  #popup-variants label { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-  #popup-variants select {
-    padding: 8px; border: 1px solid #000;
-    font-size: 13px; width: 100%;
-  }
+    /* Variant Section */
+    #popup-variants { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+    #popup-variants label { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+    #popup-variants select {
+      padding: 8px; border: 1px solid #000;
+      font-size: 13px; width: 100%;
+    }
 
-  /* Add to Cart Button */
-  .popup-add-btn {
-    margin-top: 10px; padding: 12px; width: 100%;
-    background: #000; color: #fff;
-    font-weight: bold; font-size: 13px;
-    border: none; cursor: pointer;
-    transition: 0.3s;
-    text-transform: uppercase;
-  }
-  .popup-add-btn:hover { background: #333; }
+    /* Add to Cart Button */
+    .popup-add-btn {
+      margin-top: 10px; padding: 12px; width: 100%;
+      background: #000; color: #fff;
+      font-weight: bold; font-size: 13px;
+      border: none; cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+    }
+    .popup-add-btn:hover { background: #333; }
 {% endstyle %}
 
 <script>
@@ -215,9 +241,105 @@
 {% schema %}
 {
   "name": "Product Quick View",
-  "settings": [{ "type": "collection", "id": "collection", "label": "Choose Collection" },
-  { "type": "text", "id": "heading", "label": "Heading", "default": "Tisso vison in the wild" },
-    { "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#000000" },],
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Choose Collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Tisso vison in the wild" },
+    { "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#000000" },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "ADD TO CART →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button hover background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover text color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "image_picker",
+      "id": "button_icon",
+      "label": "Button icon"
+    },
+    {
+      "type": "range",
+      "id": "button_icon_width",
+      "label": "Icon width (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_icon_height",
+      "label": "Icon height (px)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "button_icon_fit",
+      "label": "Icon object fit",
+      "options": [
+        { "value": "contain", "label": "Contain" },
+        { "value": "cover", "label": "Cover" },
+        { "value": "fill", "label": "Fill" },
+        { "value": "none", "label": "None" },
+        { "value": "scale-down", "label": "Scale Down" }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "select",
+      "id": "button_hover_effect",
+      "label": "Button hover effect class",
+      "options": [
+        { "value": "", "label": "None" },
+        { "value": "hover-effect-1", "label": "Effect 1" },
+        { "value": "hover-effect-2", "label": "Effect 2" }
+      ],
+      "default": ""
+    }
+  ],
   "presets": [{ "name": "Product Grid with Quick View" }]
 }
 {% endschema %}

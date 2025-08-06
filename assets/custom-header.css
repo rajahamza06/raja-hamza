@@ -9,9 +9,9 @@
       background-color: {{ section.settings.header_bg_color }};
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    
+
     .header-container {
-      max-width: {{ section.settings.container_width }}px;
+      max-width: 1360px;
       margin: 0 auto;
       padding: 10px 15px;
     }

@@ -41,43 +41,22 @@
       </div>
 
       <!-- Button -->
-      <div class="header-button-wrap">
-        {% if section.settings.button_text != blank %}
-          <a
-            href="{{ section.settings.button_link }}"
-            class="header-button {{ section.settings.button_hover_effect }}"
-            style="
-              --btn-bg: {{ section.settings.button_bg }};
-              --btn-color: {{ section.settings.button_color }};
-              --btn-hover-bg: {{ section.settings.button_hover_bg }};
-              --btn-hover-color: {{ section.settings.button_hover_color }};
-              text-transform: {{ section.settings.button_text_transform }};
-            "
-          >
-            {{ section.settings.button_text }}
-
-            {% if section.settings.button_icon != blank %}
-              {% assign icon_ext = section.settings.button_icon | split: '.' | last %}
-              {% if icon_ext == 'svg' %}
-                <span class="header-button-icon-right">
-                  {{ section.settings.button_icon | file_url | inline_svg }}
-                </span>
-              {% else %}
-                <img
-                  src="{{ section.settings.button_icon | image_url }}"
-                  alt=""
-                  class="header-button-icon-right"
-                  style="
-                    width: {{ section.settings.button_icon_width }}px;
-                    height: {{ section.settings.button_icon_height }}px;
-                    object-fit: {{ section.settings.button_icon_fit }};
-                  "
-                >
-              {% endif %}
-            {% endif %}
-          </a>
-        {% endif %}
-      </div>
+      {% render 'test-button',
+        button_text: section.settings.button_text,
+        button_link: section.settings.button_link,
+        button_hover_effect: section.settings.button_hover_effect,
+        button_bg: section.settings.button_bg,
+        button_color: section.settings.button_color,
+        button_hover_bg: section.settings.button_hover_bg,
+        button_hover_color: section.settings.button_hover_color,
+        button_text_transform: section.settings.button_text_transform,
+        button_icon: section.settings.button_icon,
+        button_icon_width: section.settings.button_icon_width,
+        button_icon_height: section.settings.button_icon_height,
+        button_icon_fit: section.settings.button_icon_fit,
+        btn_class: 'header-button',
+        btn_icon_class: 'header-button-icon-right'
+      %}
     </div>
   </div>
 
@@ -255,7 +234,7 @@
     .mobile-btn { width: fit-content; margin: 0 auto; }
 
     @media screen and (max-width: 749px) {
-      .header-middle, .header-button-wrap { 
+      .header-middle, .header-button-wrap {
         display: none;
      }
      .header-container {
@@ -268,11 +247,11 @@
         align-items: center;
         justify-items: center;
       }
-      .mobile-hamburger { 
+      .mobile-hamburger {
         justify-self: start;
      }
-      .header-logo-wrap { 
-        grid-column: 2; 
+      .header-logo-wrap {
+        grid-column: 2;
     }
     .mobile-panel-content p{
         margin:0;

@@ -1,11 +1,11 @@
 <section class="product-grid-quickview">
   <div class="product-grid-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="product-grid-heading" style="color: {{ section.settings.heading_color }};">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
     <div class="product-grid-inner">
-      {% if section.settings.heading != blank %}
-        <h2 class="product-grid-heading" style="color: {{ section.settings.heading_color }};">
-          {{ section.settings.heading }}
-        </h2>
-      {% endif %}
       {% for product in collections[section.settings.collection].products %}
         <div class="product-card">
           <img

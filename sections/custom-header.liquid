@@ -13,24 +13,27 @@
       </button>
 
       <!-- Logo -->
+      <!-- Logo -->
       <div class="header-logo-wrap">
-        {% if section.settings.use_text_logo %}
-          <h2
-            class="header-logo"
-            style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
-          >
-            {{ section.settings.logo_text }}
-          </h2>
-        {% elsif section.settings.logo_image != blank %}
-          <img src="{{ section.settings.logo_image | image_url: width: 150 }}" alt="Logo" class="header-logo-img">
-        {% else %}
-          <h2
-            class="header-logo"
-            style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
-          >
-            {{ shop.name }}
-          </h2>
-        {% endif %}
+        <a href="{{ routes.root_url }}" class="header-logo-link">
+          {% if section.settings.use_text_logo %}
+            <h2
+              class="header-logo"
+              style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
+            >
+              {{ section.settings.logo_text }}
+            </h2>
+          {% elsif section.settings.logo_image != blank %}
+            <img src="{{ section.settings.logo_image | image_url: width: 150 }}" alt="Logo" class="header-logo-img">
+          {% else %}
+            <h2
+              class="header-logo"
+              style="color: {{ section.settings.logo_text_color }}; text-transform: {{ section.settings.logo_text_transform }};"
+            >
+              {{ shop.name }}
+            </h2>
+          {% endif %}
+        </a>
       </div>
 
       <!-- Middle Text -->
@@ -255,7 +258,7 @@
     .mobile-btn { width: fit-content; margin: 0 auto; }
 
     @media screen and (max-width: 749px) {
-      .header-middle, .header-button-wrap { 
+      .header-middle, .header-button-wrap {
         display: none;
      }
      .header-container {
@@ -268,11 +271,11 @@
         align-items: center;
         justify-items: center;
       }
-      .mobile-hamburger { 
+      .mobile-hamburger {
         justify-self: start;
      }
-      .header-logo-wrap { 
-        grid-column: 2; 
+      .header-logo-wrap {
+        grid-column: 2;
     }
     .mobile-panel-content p{
         margin:0;

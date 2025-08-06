@@ -1,4 +1,4 @@
-{% comment %} <section class="product-grid-quickview">
+<section class="product-grid-quickview">
   <div class="product-quickview-container">
     {% if section.settings.heading != blank %}
       <h2 class="product-grid-heading" style="color: {{ section.settings.heading_color }};">
@@ -59,16 +59,9 @@
 
                   {% assign size_option = product.options_by_name.Size %}
                   {% if size_option %}
-                    <div class="popup-sizes" data-option-index="1">
+                    <div class="popup-sizes">
                       {% for value in size_option.values %}
-                        <button
-                          type="button"
-                          class="size-option"
-                          data-option-value="{{ value }}"
-                          onclick="selectOption(this, '{{ product.handle }}', 1, '{{ value }}')"
-                        >
-                          {{ value }}
-                        </button>
+                        <div>{{ value }}</div>
                       {% endfor %}
                     </div>
                   {% endif %}
@@ -138,341 +131,158 @@
       {% endfor %}
     </div>
   </div>
-</section> {% endcomment %}
-<!-- The code has already been fully updated with color and size selection, dynamic variant matching, and button enabling/disabling. Below is your final working version with all improvements baked in. -->
-
-<section class="product-grid-quickview">
-  <div class="product-quickview-container">
-    {% if section.settings.heading != blank %}
-      <h2 class="product-grid-heading" style="color: {{ section.settings.heading_color }};">
-        {{ section.settings.heading }}
-      </h2>
-    {% endif %}
-    <div class="product-grid-inner">
-      {% for product in collections[section.settings.collection].products %}
-        <div class="product-grid-card">
-          <img
-            src="{{ product.featured_image | image_url: width: 600 }}"
-            alt="{{ product.title }}"
-            class="product-card-img"
-          >
-
-          <button
-            class="quick-view-btn"
-            onclick="openQuickView('quick-view-{{ product.handle }}')"
-          >
-            +
-          </button>
-
-          <!-- Unique Quick View Popup -->
-          <div id="quick-view-{{ product.handle }}" class="quick-view-popup">
-            <div class="quick-view-content">
-              <span class="close-btn" onclick="closeQuickView('quick-view-{{ product.handle }}')">&times;</span>
-
-              <div class="popup-inner">
-                <!-- Left Image -->
-                <div class="popup-image-wrap">
-                  <img
-                    src="{{ product.featured_image | image_url }}"
-                    alt="{{ product.title }}"
-                  >
-                </div>
-
-                <!-- Right Details -->
-                <div class="popup-details">
-                  <h3 class="popup-title">{{ product.title }}</h3>
-                  <p class="popup-price">{{ product.price | money }}</p>
-                  <p class="popup-desc">{{ product.description }}</p>
-
-                  {% assign color_option = product.options_by_name.Color %}
-                  {% if color_option %}
-                    <div class="popup-colors" data-option-index="0">
-                      {% for value in color_option.values %}
-                        <button
-                          type="button"
-                          class="color-option"
-                          data-option-value="{{ value }}"
-                          onclick="selectOption(this, '{{ product.handle }}', 0, '{{ value }}')"
-                        >
-                          {{ value }}
-                        </button>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-
-                  {% assign size_option = product.options_by_name.Size %}
-                  {% if size_option %}
-                    <div class="popup-sizes" data-option-index="1">
-                      {% for value in size_option.values %}
-                        <button
-                          type="button"
-                          class="size-option"
-                          data-option-value="{{ value }}"
-                          onclick="selectOption(this, '{{ product.handle }}', 1, '{{ value }}')"
-                        >
-                          {{ value }}
-                        </button>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-
-                  {%- assign variant_to_use = product.selected_or_first_available_variant | default: product.variants.first -%}
-                  {%- assign product_form_id = 'product-form-' | append: product.id -%}
-
-                  {% if variant_to_use %}
-                    {%- form 'product', product, id: product_form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                      <input
-                        type="hidden"
-                        name="id"
-                        id="variant-id-{{ product.handle }}"
-                        value=""
-                        required
-                      >
-                      <input
-                        type="hidden"
-                        name="quantity"
-                        value="{% if variant_to_use.quantity_rule.min %}{{ variant_to_use.quantity_rule.min }}{% else %}1{% endif %}"
-                      >
-
-                      {% if section.settings.button_text != blank %}
-                        <button
-                          type="submit"
-                          class="popup-add-btn {{ section.settings.button_hover_effect }}"
-                          style="
-                            --btn-bg: {{ section.settings.button_bg }};
-                            --btn-color: {{ section.settings.button_color }};
-                            --btn-hover-bg: {{ section.settings.button_hover_bg }};
-                            --btn-hover-color: {{ section.settings.button_hover_color }};
-                            text-transform: {{ section.settings.button_text_transform }};
-                          "
-                          disabled
-                        >
-                          {{ section.settings.button_text }}
-                          {% if section.settings.button_icon != blank %}
-                            <img
-                              src="{{ section.settings.button_icon | image_url }}"
-                              alt=""
-                              class="popup-add-btn-icon"
-                              style="
-                                width: {{ section.settings.button_icon_width }}px;
-                                height: {{ section.settings.button_icon_height }}px;
-                                object-fit: {{ section.settings.button_icon_fit }};
-                              "
-                            >
-                          {% endif %}
-                        </button>
-                      {% endif %}
-                    {%- endform -%}
-                  {% else %}
-                    <p class="out-of-stock-msg">This product is currently unavailable.</p>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
 </section>
 
-<script>
-  function openQuickView(popupId) {
-    const popup = document.getElementById(popupId);
-    if (popup) popup.classList.add('active');
-  }
-
-  function closeQuickView(popupId) {
-    const popup = document.getElementById(popupId);
-    if (popup) popup.classList.remove('active');
-  }
-
-  const productVariants = {};
-  {% for product in collections[section.settings.collection].products %}
-    productVariants["{{ product.handle }}"] = {{ product.variants | json }};
-  {% endfor %}
-
-  const selectedOptions = {};
-
-  function selectOption(button, handle, optionIndex, optionValue) {
-    if (!selectedOptions[handle]) selectedOptions[handle] = [];
-    selectedOptions[handle][optionIndex] = optionValue;
-
-    const container = button.closest(`[data-option-index='${optionIndex}']`);
-    container.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-
-    const variants = productVariants[handle];
-    const selected = selectedOptions[handle];
-
-    const matchedVariant = variants.find(variant => {
-      return variant.options.every((opt, i) => selected[i] === opt);
-    });
-
-    const input = document.getElementById(`variant-id-${handle}`);
-    const submitBtn = input.closest('form').querySelector('button[type="submit"]');
-
-    if (matchedVariant) {
-      input.value = matchedVariant.id;
-      submitBtn.disabled = false;
-    } else {
-      input.value = '';
-      submitBtn.disabled = true;
-    }
-  }
-</script>
-
-
 {% style %}
-  .color-option.active {
-    border: 2px solid #000;
-    background-color: #eee;
+.color-option.active {
+  border: 2px solid #000;
+  background-color: #eee;
+}
+
+      .product-grid-quickview{
+        padding-block:90px;
+
+      }
+        .product-quickview-container {
+           width: 100%;
+            max-width: 1360px;
+            margin: 0 auto;
+            padding-inline: 15px;
+        }
+        .product-grid-inner{
+            display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 20px;
+        }
+        .product-grid-heading{
+            font-family: Lustria;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 36px;
+           line-height: 1.2;
+           margin-bottom:30px;
+        }
+        .product-grid-card{ position: relative; overflow: hidden; }
+        .product-card-img { width: 100%; display: block;height:100%;aspect-ratio:1/1;object-fit:cover;}
+        .quick-view-btn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background: #f8f8f8;
+          color: #000;
+          border: none;
+          border-radius: 50%;
+          width: 22px;
+          height:22px;
+          font-size: 22px;
+          cursor: pointer;
+          transition: 0.3s;
+          line-height: 1.1;
+          padding: 0;
+        }
+        .quick-view-btn:hover { background: #000;color:#fff }
+        .product-grid-card:nth-child(1) .quick-view-btn {
+        top: 53%;
+        right: 36%;
+        }
+        .product-grid-card:nth-child(2) .quick-view-btn {
+      top: 50%;
+      right: 14%;
   }
-
-        .product-grid-quickview{
-          padding-block:90px;
-
+  .product-grid-card:nth-child(3) .quick-view-btn {
+      top: 20%;
+      right: 35%;
+  }
+  .product-grid-card:nth-child(4) .quick-view-btn {
+      top: 16%;
+    right: 26%;
+  }
+  .product-grid-card:nth-child(5) .quick-view-btn {
+      top: 23%;
+    left: 50%;
+  }
+  .product-grid-card:nth-child(6) .quick-view-btn {
+          top: 39%;
+    right: 20%;
+  }
+        /* Popup Overlay */
+        .quick-view-popup {
+          display: none;
+          position: fixed; top: 0; left: 0;
+          width: 100%; height: 100%;
+          background: rgba(0,0,0,0.6);
+          z-index: 9999;
+          justify-content: center; align-items: center;
         }
-          .product-quickview-container {
-             width: 100%;
-              max-width: 1360px;
-              margin: 0 auto;
-              padding-inline: 15px;
-          }
-          .product-grid-inner{
-              display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-          }
-          .product-grid-heading{
-              font-family: Lustria;
-              font-weight: 400;
-              font-style: Regular;
-              font-size: 36px;
-             line-height: 1.2;
-             margin-bottom:30px;
-          }
-          .product-grid-card{ position: relative; overflow: hidden; }
-          .product-card-img { width: 100%; display: block;height:100%;aspect-ratio:1/1;object-fit:cover;}
-          .quick-view-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #f8f8f8;
-            color: #000;
-            border: none;
-            border-radius: 50%;
-            width: 22px;
-            height:22px;
-            font-size: 22px;
-            cursor: pointer;
-            transition: 0.3s;
-            line-height: 1.1;
-            padding: 0;
-          }
-          .quick-view-btn:hover { background: #000;color:#fff }
-          .product-grid-card:nth-child(1) .quick-view-btn {
-          top: 53%;
-          right: 36%;
-          }
-          .product-grid-card:nth-child(2) .quick-view-btn {
-        top: 50%;
-        right: 14%;
-    }
-    .product-grid-card:nth-child(3) .quick-view-btn {
-        top: 20%;
-        right: 35%;
-    }
-    .product-grid-card:nth-child(4) .quick-view-btn {
-        top: 16%;
-      right: 26%;
-    }
-    .product-grid-card:nth-child(5) .quick-view-btn {
-        top: 23%;
-      left: 50%;
-    }
-    .product-grid-card:nth-child(6) .quick-view-btn {
-            top: 39%;
-      right: 20%;
-    }
-          /* Popup Overlay */
-          .quick-view-popup {
-            display: none;
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 9999;
-            justify-content: center; align-items: center;
-          }
-          .quick-view-popup.active { display: flex; }
+        .quick-view-popup.active { display: flex; }
 
-          .quick-view-content {
-            background: #fff;
-            padding: 20px;
-            width: 350px; max-width: 90%;
-            position: relative;
-            animation: popupFade 0.3s ease;
-          }
-          @keyframes popupFade {
-            from { opacity:0; transform: scale(0.95); }
-            to { opacity:1; transform: scale(1); }
-          }
-          .close-btn {
-            position: absolute; top: 12px; right: 12px;
-            font-size: 22px; cursor: pointer;
-          }
-
-          /* Popup Layout */
-          .popup-inner { display: flex; flex-direction: column; gap: 12px; }
-          .popup-image-wrap img { width: 100%; margin-bottom: 12px; }
-          .popup-title { font-size: 16px; font-weight: 600; margin: 0; }
-          .popup-price { font-weight: 600; font-size: 16px; margin: 0; }
-          .popup-desc { font-size: 13px; line-height: 1.4; color: #333; margin-bottom: 12px; }
-
-          /* Variant Section */
-          #popup-variants { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
-          #popup-variants label { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-          #popup-variants select {
-            padding: 8px; border: 1px solid #000;
-            font-size: 13px; width: 100%;
-          }
-
-          /* Add to Cart Button */
-          .popup-add-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 18px;
-          padding: 14px 52px;
-          text-decoration: none;
-          transition: all 0.3s ease;
-          width: 100%;
-          background: var(--btn-bg);
-          color: var(--btn-color);
+        .quick-view-content {
+          background: #fff;
+          padding: 20px;
+          width: 350px; max-width: 90%;
+          position: relative;
+          animation: popupFade 0.3s ease;
+        }
+        @keyframes popupFade {
+          from { opacity:0; transform: scale(0.95); }
+          to { opacity:1; transform: scale(1); }
+        }
+        .close-btn {
+          position: absolute; top: 12px; right: 12px;
+          font-size: 22px; cursor: pointer;
         }
 
-        .popup-add-btn-icon {
-          display: inline-block;
-          transition: filter 0.3s ease;
+        /* Popup Layout */
+        .popup-inner { display: flex; flex-direction: column; gap: 12px; }
+        .popup-image-wrap img { width: 100%; margin-bottom: 12px; }
+        .popup-title { font-size: 16px; font-weight: 600; margin: 0; }
+        .popup-price { font-weight: 600; font-size: 16px; margin: 0; }
+        .popup-desc { font-size: 13px; line-height: 1.4; color: #333; margin-bottom: 12px; }
+
+        /* Variant Section */
+        #popup-variants { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+        #popup-variants label { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+        #popup-variants select {
+          padding: 8px; border: 1px solid #000;
+          font-size: 13px; width: 100%;
         }
 
-        .popup-add-btn.hover-bg:hover {
-          background: var(--btn-hover-bg);
-          color: var(--btn-hover-color);
-        }
-        .popup-add-btn.hover-scale:hover { transform: scale(1.05); }
-        .popup-add-btn.hover-both:hover {
-          background: var(--btn-hover-bg);
-          color: var(--btn-hover-color);
-          transform: scale(1.05);
-        }
-        .popup-add-btn.hover-bg:hover img,
-        .popup-add-btn.hover-both:hover img {
-          filter: invert(1);
-        }
+        /* Add to Cart Button */
+        .popup-add-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        padding: 14px 52px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        width: 100%;
+        background: var(--btn-bg);
+        color: var(--btn-color);
+      }
+
+      .popup-add-btn-icon {
+        display: inline-block;
+        transition: filter 0.3s ease;
+      }
+
+      .popup-add-btn.hover-bg:hover {
+        background: var(--btn-hover-bg);
+        color: var(--btn-hover-color);
+      }
+      .popup-add-btn.hover-scale:hover { transform: scale(1.05); }
+      .popup-add-btn.hover-both:hover {
+        background: var(--btn-hover-bg);
+        color: var(--btn-hover-color);
+        transform: scale(1.05);
+      }
+      .popup-add-btn.hover-bg:hover img,
+      .popup-add-btn.hover-both:hover img {
+        filter: invert(1);
+      }
 {% endstyle %}
 
-{% comment %} <script>
+<script>
   function openQuickView(popupId) {
     const popup = document.getElementById(popupId);
     if (popup) {
@@ -486,7 +296,7 @@
       popup.classList.remove('active');
     }
   }
-</script> {% endcomment %}
+</script>
 
 <script>
   const productVariants = {};

@@ -1,0 +1,14 @@
+.volume-pricing{margin:16px 0}
+.volume-pricing__header{margin-bottom:12px}
+.volume-pricing__title{margin:0 0 8px}
+.volume-pricing__price{font-weight:600}
+.volume-pricing__bar{margin:12px 0}
+.volume-pricing__bar-row{display:flex;justify-content:space-between;align-items:center;font-size:0.95rem;margin-bottom:6px}
+.volume-pricing__label{color:var(--color-foreground, #222)}
+.volume-pricing__progress{height:10px;background:rgba(0,0,0,.08);border-radius:999px;overflow:hidden}
+.volume-pricing__progress-fill{height:100%;background:#f6a823;transition:width .2s ease}
+.volume-pricing__qty{margin:12px 0}
+.quantity-selector{display:inline-flex;border:1px solid rgba(0,0,0,.15);border-radius:6px;overflow:hidden}
+.quantity-selector__button{background:#fff;border:0;width:38px;height:38px;cursor:pointer}
+.quantity-selector__input{width:56px;text-align:center;border:0}
+.add-to-cart{display:block;width:100%;margin-top:8px}

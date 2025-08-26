@@ -1,0 +1,98 @@
+{% liquid
+  assign product_obj = closest.product | default: product
+  assign first_available_variant = product_obj.selected_or_first_available_variant
+  assign base_price = first_available_variant.price | divided_by: 100.0
+  assign currency_code = cart.currency.iso_code
+
+  assign tiers = ''
+  for i in (1..5)
+    assign min_key = 'tier' | append: i | append: '_min'
+    assign price_key = 'tier' | append: i | append: '_price'
+    assign min_val = section.settings[min_key]
+    assign price_val = section.settings[price_key]
+    if min_val != blank and price_val != blank
+      assign pair = '{"min":' | append: min_val | append: ',"price":' | append: price_val | append: '}'
+      if tiers == ''
+        assign tiers = pair
+      else
+        assign tiers = tiers | append: ',' | append: pair
+      endif
+    endif
+  endfor
+  assign tiers_json = '[' | append: tiers | append: ']'
+%}
+
+<link rel="stylesheet" href="{{ 'volume-pricing.css' | asset_url }}">
+<script src="{{ 'volume-pricing.js' | asset_url }}" defer></script>
+
+<div class="volume-pricing" data-section-id="{{ section.id }}">
+  <div class="volume-pricing__header">
+    <h2 class="volume-pricing__title">{{ product_obj.title }}</h2>
+    <div class="volume-pricing__price">
+      <span>Base: </span>
+      <span data-actual>{{ base_price | money_with_currency: currency_code }}</span>
+    </div>
+  </div>
+
+  <product-form-component id="ProductForm-{{ section.id }}">
+    <form method="post" action="/cart/add" accept-charset="UTF-8" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="{{ first_available_variant.id }}">
+
+      <volume-pricing
+        data-base-price="{{ base_price }}"
+        data-currency="{{ currency_code }}"
+        data-tiers='{{ tiers_json | escape }}'
+      >
+        <div class="volume-pricing__bar">
+          <div class="volume-pricing__bar-row">
+            <span class="volume-pricing__label">Want a discount? Add more and get volume pricing</span>
+            <span class="volume-pricing__price" data-discount></span>
+          </div>
+          <div class="volume-pricing__progress">
+            <div class="volume-pricing__progress-fill" data-progress-fill style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="volume-pricing__qty">
+          <div class="quantity-selector">
+            <button class="quantity-selector__button" type="button" aria-label="Decrease" data-qty-minus>-</button>
+            <input class="quantity-selector__input" type="number" name="quantity" min="1" value="1" data-qty-input>
+            <button class="quantity-selector__button" type="button" aria-label="Increase" data-qty-plus>+</button>
+          </div>
+        </div>
+
+        <add-to-cart-component exportparts="button:button">
+          <button class="button button--primary add-to-cart" type="submit" name="add" data-atc-button>
+            <span data-atc-text>Add to cart</span>
+          </button>
+        </add-to-cart-component>
+      </volume-pricing>
+
+      <span class="visually-hidden" aria-live="polite" data-ref="liveRegion"></span>
+      <input type="hidden" data-ref="variantId" value="{{ first_available_variant.id }}">
+    </form>
+  </product-form-component>
+</div>
+
+{% schema %}
+{
+  "name": "Volume pricing product",
+  "settings": [
+    {"type":"header","content":"Base & tiers"},
+    {"type":"paragraph","content":"Set per-unit prices for tiers. Example: Tier1 min 1 price 550.75, Tier2 min 2 price 530, etc. The widget shows the left actual price and right tier price and fills the bar toward the next tier."},
+    {"type":"range","id":"tier1_min","label":"Tier 1 min qty","min":1,"max":20,"step":1,"default":1},
+    {"type":"text","id":"tier1_price","label":"Tier 1 price (number)","default":"0"},
+    {"type":"range","id":"tier2_min","label":"Tier 2 min qty","min":1,"max":50,"step":1},
+    {"type":"text","id":"tier2_price","label":"Tier 2 price (number)"},
+    {"type":"range","id":"tier3_min","label":"Tier 3 min qty","min":1,"max":100,"step":1},
+    {"type":"text","id":"tier3_price","label":"Tier 3 price (number)"},
+    {"type":"range","id":"tier4_min","label":"Tier 4 min qty","min":1,"max":200,"step":1},
+    {"type":"text","id":"tier4_price","label":"Tier 4 price (number)"},
+    {"type":"range","id":"tier5_min","label":"Tier 5 min qty","min":1,"max":500,"step":1},
+    {"type":"text","id":"tier5_price","label":"Tier 5 price (number)"}
+  ],
+  "presets": [
+    {"name":"Volume pricing product"}
+  ]
+}
+{% endschema %}

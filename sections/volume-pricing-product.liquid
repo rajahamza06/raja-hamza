@@ -1,0 +1,210 @@
+{% comment %}
+  Volume Pricing Product Section
+  - Shows product title, base price, tier discount price preview, progress bar, qty controls, and add-to-cart
+  - Tier prices are defined per quantity (1..5). If quantity exceeds highest defined tier, last tier price is used.
+  - This section can use the page product context or a selected product in settings.
+{% endcomment %}
+
+{%- assign context_product = product -%}
+{%- if section.settings.product != blank -%}
+  {%- assign context_product = section.settings.product -%}
+{%- endif -%}
+
+{%- if context_product == blank -%}
+  <div class="vp-product">
+    <p>No product selected.</p>
+  </div>
+  {% schema %}
+  {
+    "name": "Volume Pricing Product",
+    "settings": [
+      {"type":"product","id":"product","label":"Product"},
+      {"type":"text","id":"heading","label":"Heading","default":"Product"},
+      {"type":"text","id":"tagline","label":"Tagline","default":"Want a discount? Add more and get volume pricing"},
+      {"type":"number","id":"max_qty","label":"Max tier quantity","default":5,"min":1,"max":20},
+      {"type":"text","id":"price_qty_1","label":"Price for qty 1 (e.g., 550.75)"},
+      {"type":"text","id":"price_qty_2","label":"Price for qty 2"},
+      {"type":"text","id":"price_qty_3","label":"Price for qty 3"},
+      {"type":"text","id":"price_qty_4","label":"Price for qty 4"},
+      {"type":"text","id":"price_qty_5","label":"Price for qty 5"}
+    ],
+    "presets": [{"name":"Volume Pricing Product"}]
+  }
+  {% endschema %}
+  {% stylesheet %}
+  {% endstylesheet %}
+  {% javascript %}
+  {% endjavascript %}
+  {% endif %}
+
+{%- if context_product != blank -%}
+{%- assign first_variant = context_product.selected_or_first_available_variant -%}
+{%- assign base_price = first_variant.price -%}
+
+{%- comment -%}
+ Build tier price map and pass to JS
+{%- endcomment -%}
+{%- assign tiers = '' -%}
+{%- for i in (1..section.settings.max_qty) -%}
+  {%- assign key = 'price_qty_' | append: i -%}
+  {%- assign field = section.settings[key] -%}
+  {%- if field != blank -%}
+    {%- assign cents = field | replace: ',', '' | times: 100 | round -%}
+  {%- else -%}
+    {%- assign cents = blank -%}
+  {%- endif -%}
+  {%- if forloop.first -%}
+    {%- assign tiers = '[' -%}
+  {%- endif -%}
+  {%- if cents != blank -%}
+    {%- assign tiers = tiers | append: '{"qty":' | append: i | append: ',"price_cents":' | append: cents | append: '}' -%}
+  {%- else -%}
+    {%- comment -%} fallback to base price if not provided {%- endcomment -%}
+    {%- assign tiers = tiers | append: '{"qty":' | append: i | append: ',"price_cents":' | append: base_price | append: '}' -%}
+  {%- endif -%}
+  {%- unless forloop.last -%}
+    {%- assign tiers = tiers | append: ',' -%}
+  {%- endunless -%}
+  {%- if forloop.last -%}
+    {%- assign tiers = tiers | append: ']' -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div class="vp-product" id="vp-{{ section.id }}" data-section-id="{{ section.id }}" data-tiers='{{ tiers | escape }}' data-max-qty='{{ section.settings.max_qty }}' data-base-price-cents='{{ base_price }}'>
+  <div class="vp-product__header">
+    <h1 class="vp-product__title">{{ section.settings.heading | default: context_product.title }}</h1>
+  </div>
+
+  <div class="vp-product__price">{{ base_price | money }}</div>
+
+  <div class="vp-volume-row">
+    <div class="vp-volume-row__left">{{ base_price | money }}/each</div>
+    <div class="vp-volume-row__center">{{ section.settings.tagline }}</div>
+    <div class="vp-volume-row__right" data-vp-discount-price>{{ base_price | money }}/each</div>
+    <div class="vp-progress">
+      <div class="vp-progress__bar" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <form method="post" action="/cart/add" class="vp-product__form" data-type="add-to-cart-form">
+    <input type="hidden" name="id" value="{{ first_variant.id }}"/>
+    <div class="vp-qty">
+      <button class="vp-qty__btn" type="button" data-action="decrement" aria-label="Decrease quantity">−</button>
+      <input class="vp-qty__input" name="quantity" value="1" type="number" min="1" step="1" inputmode="numeric"/>
+      <button class="vp-qty__btn" type="button" data-action="increment" aria-label="Increase quantity">+</button>
+    </div>
+    <button type="submit" class="vp-add-to-cart" data-vp-atc>
+      Add to cart
+    </button>
+  </form>
+</div>
+
+{% schema %}
+{
+  "name": "Volume Pricing Product",
+  "settings": [
+    {"type":"product","id":"product","label":"Product"},
+    {"type":"text","id":"heading","label":"Heading","default":""},
+    {"type":"text","id":"tagline","label":"Tagline","default":"Want a discount? Add more and get volume pricing"},
+    {"type":"range","id":"max_qty","label":"Max tier quantity","min":1,"max":10,"step":1,"default":5},
+    {"type":"text","id":"price_qty_1","label":"Price for qty 1 (e.g., 550.75)"},
+    {"type":"text","id":"price_qty_2","label":"Price for qty 2"},
+    {"type":"text","id":"price_qty_3","label":"Price for qty 3"},
+    {"type":"text","id":"price_qty_4","label":"Price for qty 4"},
+    {"type":"text","id":"price_qty_5","label":"Price for qty 5"}
+  ],
+  "presets": [
+    {"name": "Volume Pricing Product"}
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.vp-product { max-width: 720px; margin: 0 auto; }
+.vp-product__title { margin: 0 0 8px; font-weight: 700; }
+.vp-product__price { font-size: 20px; margin-bottom: 12px; }
+
+.vp-volume-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; border: 1px solid rgba(0,0,0,.1); border-radius: 6px; padding: 6px 8px 8px; margin-bottom: 12px; }
+.vp-volume-row__left, .vp-volume-row__right { font-size: 12px; white-space: nowrap; }
+.vp-volume-row__center { font-size: 12px; text-align: center; color: #6b7280; }
+.vp-progress { grid-column: 1 / -1; height: 8px; background: #eee; border-radius: 8px; overflow: hidden; }
+.vp-progress__bar { height: 100%; width: 0%; background: #f3b200; transition: width .25s ease; }
+
+.vp-qty { display: inline-flex; align-items: center; border: 1px solid rgba(0,0,0,.1); border-radius: 6px; overflow: hidden; }
+.vp-qty__btn { background: #fff; border: 0; width: 40px; height: 40px; cursor: pointer; font-size: 18px; }
+.vp-qty__input { width: 56px; height: 40px; text-align: center; border: 0; }
+
+.vp-add-to-cart { display: inline-block; background: #f3b200; color: #111; border: 0; padding: 12px 16px; border-radius: 6px; margin-left: 8px; cursor: pointer; font-weight: 700; min-width: 220px; }
+{% endstylesheet %}
+
+{% javascript %}
+(function() {
+  var container = document.getElementById('vp-{{ section.id }}');
+  if (!container) return;
+
+  function parseJSONAttribute(el, attr) {
+    try { return JSON.parse(el.getAttribute(attr)); } catch(e) { return []; }
+  }
+
+  function formatMoney(cents) {
+    var value = (cents / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return {{ cart.currency.symbol | json }} + value;
+  }
+
+  var tiers = parseJSONAttribute(container, 'data-tiers');
+  var maxQty = parseInt(container.getAttribute('data-max-qty'), 10) || 5;
+  var basePriceCents = parseInt(container.getAttribute('data-base-price-cents'), 10) || 0;
+  var discountPriceEl = container.querySelector('[data-vp-discount-price]');
+  var progressBarEl = container.querySelector('.vp-progress__bar');
+  var qtyInput = container.querySelector('.vp-qty__input');
+  var decBtn = container.querySelector('[data-action="decrement"]');
+  var incBtn = container.querySelector('[data-action="increment"]');
+  var atcBtn = container.querySelector('[data-vp-atc]');
+
+  function getTierPriceCents(quantity) {
+    var price = null;
+    for (var i = 0; i < tiers.length; i++) {
+      if (tiers[i].qty === quantity) { price = tiers[i].price_cents; break; }
+    }
+    if (price === null) {
+      // If quantity higher than declared tiers, use the highest tier price
+      if (quantity > 0) {
+        var highest = tiers[tiers.length - 1];
+        price = highest ? highest.price_cents : basePriceCents;
+      } else {
+        price = basePriceCents;
+      }
+    }
+    return price || basePriceCents;
+  }
+
+  function clamp(min, val, max) { return Math.max(min, Math.min(val, max)); }
+
+  function updateUI() {
+    var q = parseInt(qtyInput.value, 10) || 1;
+    q = clamp(1, q, 9999);
+    qtyInput.value = q;
+
+    var unitPriceCents = getTierPriceCents(q);
+    if (discountPriceEl) {
+      discountPriceEl.textContent = formatMoney(unitPriceCents) + '/each';
+    }
+
+    if (progressBarEl) {
+      var pct = Math.max(0, Math.min(100, (q / maxQty) * 100));
+      progressBarEl.style.width = pct + '%';
+    }
+
+    if (atcBtn) {
+      atcBtn.textContent = 'Add to cart';
+    }
+  }
+
+  if (decBtn) decBtn.addEventListener('click', function(){ qtyInput.value = Math.max(1, (parseInt(qtyInput.value,10)||1) - 1); updateUI(); });
+  if (incBtn) incBtn.addEventListener('click', function(){ qtyInput.value = (parseInt(qtyInput.value,10)||1) + 1; updateUI(); });
+  qtyInput.addEventListener('change', updateUI);
+
+  updateUI();
+})();
+{% endjavascript %}
+{%- endif -%}
